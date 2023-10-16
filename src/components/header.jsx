@@ -1,3 +1,5 @@
+
+"use client"
 import React from 'react'
 import { Montserrat } from "next/font/google"
 import { AiOutlineMenu, AiOutlineSearch } from "react-icons/ai"
@@ -8,9 +10,23 @@ const montserrat = Montserrat({
   weights : [100]
 })
 
+
 export default function Header() {
+  const [isScrolled, setIsScrolled] = React.useState(false)
+  React.useEffect(() => {
+  const scrollHandler = (event) =>{
+    if (window.scrollY > 100) {
+      setIsScrolled(true)
+    } else {
+      setIsScrolled(false)
+    }
+  }
+
+  window.addEventListener('scroll', scrollHandler)
+  },[])
   return (
-    <header className={`${montserrat.className} font-extrabold fixed top-0 w-full text-white z-[100000]`}>
+    <header 
+    className={`${montserrat.className} font-extrabold fixed top-0 w-full text-white z-[100000] ${ isScrolled && 'bg-white' } transition-colors duration-500 `}>
       <div
       className='flex items-center justify-between mx-auto max-w-7xl py-4 px-4 md:px-2'
       >
