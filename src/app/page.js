@@ -1,3 +1,4 @@
+import Banner from '@/components/banner'
 import Category from '@/components/category'
 import Fitness from '@/components/fitness'
 import Hero from '@/components/hero'
@@ -11,6 +12,7 @@ export default function Home() {
       <Category/>
       <Trending />
       <Fitness />
+      <Banner />
     </>
   )
 }
