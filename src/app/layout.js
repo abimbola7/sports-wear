@@ -1,5 +1,5 @@
 import './globals.css'
-import { Inter, Oswald } from 'next/font/google'
+import { Inter, Montserrat, Oswald } from 'next/font/google'
 import Header from '@/components/header'
 import Footer from '@/components/footer'
 
@@ -7,6 +7,10 @@ import Footer from '@/components/footer'
 const inter = Inter({ subsets: ['latin'] })
 export const oswald = Oswald({
   subsets: ["latin"],
+});
+
+export const montserrat = Montserrat({
+  subsets : ['latin']
 })
 
 

@@ -26,7 +26,7 @@ export default function Header() {
   },[])
   return (
     <header 
-    className={`${montserrat.className} font-extrabold fixed top-0 w-full text-white z-[100000] ${ isScrolled && 'bg-white' } transition-colors duration-500 `}>
+    className={`${montserrat.className} font-extrabold fixed top-0 w-full text-white z-[100000] ${ isScrolled && 'bg-[#F7F7F7] text-customBlack' } transition-colors duration-500 `}>
       <div
       className='flex items-center justify-between mx-auto max-w-7xl py-4 px-4 md:px-2'
       >
