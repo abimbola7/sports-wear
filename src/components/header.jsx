@@ -1,20 +1,16 @@
-
 "use client"
 import React from 'react'
-import { Montserrat } from "next/font/google"
 import { AiOutlineMenu, AiOutlineSearch } from "react-icons/ai"
 import { PiShoppingCartFill } from "react-icons/pi" 
 import { CgProfile } from "react-icons/cg" 
-const montserrat = Montserrat({
-  subsets : ['latin-ext'],
-  weights : [100]
-})
+import { montserrat, oswald } from '@/app/layout'
 
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = React.useState(false)
+
   React.useEffect(() => {
-  const scrollHandler = (event) =>{
+  const scrollHandler = () =>{
     if (window.scrollY > 100) {
       setIsScrolled(true)
     } else {
@@ -22,8 +18,12 @@ export default function Header() {
     }
   }
 
-  window.addEventListener('scroll', scrollHandler)
-  },[])
+  window.addEventListener('scroll', scrollHandler);
+
+  return ()=>{
+    window.removeEventListener('scroll', scrollHandler);
+  }
+  })
   return (
     <header 
     className={`${montserrat.className} font-extrabold fixed top-0 w-full text-white z-[100000] ${ isScrolled && 'bg-[#F7F7F7] text-customBlack' } transition-colors duration-500 `}>

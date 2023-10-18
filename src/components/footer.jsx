@@ -1,18 +1,7 @@
 import React from 'react'
 import { LiaFacebook } from "react-icons/lia"
 import { AiOutlineTwitter, AiOutlineYoutube,AiOutlineInstagram } from "react-icons/ai"
-import { Montserrat, Oswald } from 'next/font/google'
-
-
-const oswald = Oswald({
-  subsets: ['latin'],
-  weights: [400, 700],
-})
-
-const montserrat = Montserrat({
-  subsets: ['latin'],
-  weights: [400, 700],
-})
+import { oswald, montserrat } from '@/app/layout'
 
 export default function Footer() {
   return (
@@ -25,7 +14,7 @@ export default function Footer() {
           </h2>
           <ul className="flex space-x-3 items-center text-2xl pt-5">
             {
-             [<LiaFacebook />,<AiOutlineTwitter />,<AiOutlineYoutube />,<AiOutlineInstagram />].map((icons, index)=>(
+             [<LiaFacebook key={1} />,<AiOutlineTwitter key={2} />,<AiOutlineYoutube key={3} />,<AiOutlineInstagram key={4} />].map((icons, index)=>(
               <li key={index}>{icons}</li>
              ))
             }
@@ -69,7 +58,7 @@ export default function Footer() {
             <li>BundesstraBe 123, 456 Hamburg</li>
             <li>Germany</li>
             <li>Call : +2349137823069</li>
-            <li>abimbolababajide6@gmail.com</li>
+            <li className="truncate">abimbolababajide6@gmail.com</li>
           </ul>
         </div>
       </div>
