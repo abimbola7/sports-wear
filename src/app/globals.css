@@ -17,7 +17,7 @@ body {
 }
 
 .collection {
-  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url(https://firebasestorage.googleapis.com/v0/b/sport-wear-store.appspot.com/o/sports-wear-store-collection-bg-img.jpg?alt=media&token=cd869ab8-fb19-41be-b1e5-af3fd6f98378);
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.767)), url(https://firebasestorage.googleapis.com/v0/b/sport-wear-store.appspot.com/o/sports-wear-store-collection-bg-img.jpg?alt=media&token=cd869ab8-fb19-41be-b1e5-af3fd6f98378);
   background-repeat: no-repeat;
   background-size: cover;
   background-position:center;
@@ -25,7 +25,7 @@ body {
 
 @media (max-width:768px) {
   .collection {
-    background-color: rgba(0, 0, 0, 0.3);
-    background-position-y: 200px;
+    background-color: rgba(0, 0, 0, 0.747);
+    background-position-y: 500px;
   }
 }

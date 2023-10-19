@@ -1,9 +1,11 @@
+"use client"
 import React from 'react'
 import "./banner.css"
 import { montserrat, oswald } from '@/app/layout'
+import { db } from '../../firebase'
+import { collection, getDocs, onSnapshot, orderBy, query } from 'firebase/firestore'
 
-
-export default function Banner() {
+const Banner = () => {
   return (
     <section>
       <div
@@ -28,3 +30,5 @@ export default function Banner() {
     </section>
   )
 } 
+
+export default Banner;
