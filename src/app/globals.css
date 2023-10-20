@@ -2,15 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
-  .icon {
-    @apply  text-2xl transition-transform hover:scale-125 duration-150 ease-out cursor-pointer;
-  }
-}
+
 
 /* *{
   outline: 1px solid red;
 } */
+
+
+@layer components {
+  .icons {
+    @apply absolute right-3 text-textGray text-xl top-4 p-1 bg-white rounded-full cursor-pointer hidden group-hover:block hover:text-customBlack  
+  }
+  .icon {
+    @apply  text-2xl transition-transform hover:scale-125 duration-150 ease-out cursor-pointer;
+  }
+}
 
 body {
   background-color : #F7F7F7

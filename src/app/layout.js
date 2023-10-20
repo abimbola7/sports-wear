@@ -7,11 +7,13 @@ import Footer from '@/components/footer'
 const inter = Inter({ subsets: ['latin'] })
 export const oswald = Oswald({
   subsets: ["latin"],
+  weight: ['200', '300', '400', '500', '600', '700']
 });
 
 export const montserrat = Montserrat({
-  subsets : ['latin']
-})
+  subsets : ['latin'],
+  weight: ['200', '300', '400', '500', '600', '700']
+})    
 
 
 // export const metadata =

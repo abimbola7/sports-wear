@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import React from 'react'
+import { BsArrowRight } from 'react-icons/bs'
 import { MdOutlineArrowRightAlt } from "react-icons/md"
 
 
@@ -22,7 +23,7 @@ export default function CategoryItems({ src, title, link, type }) {
         className='px-8 py-3 rounded-3xl text-sm bg-white text-black w-fit font-semibold group'
         >
         {type}
-        <MdOutlineArrowRightAlt className='invisible group-hover:visible inline-flex ml-1 text-xl'/>
+        <BsArrowRight className='inline-flex ml-1 pb-1 text-2xl'/>
         </button>
       </div>
     </div>

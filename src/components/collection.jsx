@@ -14,7 +14,7 @@ export default function Collection() {
             <span className='text-darkOrange'>X</span>
           </h2>
           <div className="text-white text-center md:text-left">
-            <h1 className="text-4xl">Adventure Ready</h1>   
+            <h1 className={`text-4xl ${oswald.className}`}>Adventure Ready</h1>   
             <p className="mt-10">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo obcaecati error maiores</p>
           </div>
           <button className={`px-10 py-4 rounded-3xl text-xs bg-white text-black w-fit font-semibold ${montserrat.className} mt-12 lg:mt-24`}>

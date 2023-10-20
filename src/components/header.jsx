@@ -4,11 +4,12 @@ import { AiOutlineMenu, AiOutlineSearch } from "react-icons/ai"
 import { PiShoppingCartFill } from "react-icons/pi" 
 import { CgProfile } from "react-icons/cg" 
 import { montserrat, oswald } from '@/app/layout'
+import { usePathname } from 'next/navigation'
 
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = React.useState(false)
-
+  const pathname = usePathname();
   React.useEffect(() => {
   const scrollHandler = () =>{
     if (window.scrollY > 100) {
@@ -26,7 +27,7 @@ export default function Header() {
   })
   return (
     <header 
-    className={`${montserrat.className} font-extrabold fixed top-0 w-full text-white z-[100000] ${ isScrolled && 'bg-[#F7F7F7] text-customBlack' } transition-colors duration-500 `}>
+    className={`${montserrat.className} font-extrabold fixed top-0 w-full text-white z-[100000] ${ isScrolled && pathname === "/" && 'bg-[#F7F7F7] text-customBlack' } transition-colors duration-500 ${ pathname !== "/" && 'bg-transparent text-customBlack' }`}>
       <div
       className='flex items-center justify-between mx-auto max-w-7xl py-4 px-4 md:px-2'
       >
@@ -50,7 +51,10 @@ export default function Header() {
        <div className='font-medium text-darkOrange space-x-4 hidden md:inline-flex'>
           <AiOutlineSearch className="icon"/>
           <p>$48.50</p>
-          <PiShoppingCartFill className='icon'/>
+          <div className='relative'>
+            <div className='absolute -top-1 left-4 rounded-full bg-darkOrange text-white px-1 text-xs'>0</div>
+            <PiShoppingCartFill className='icon'/>
+          </div>
           <CgProfile className='icon'/>
        </div> 
 
