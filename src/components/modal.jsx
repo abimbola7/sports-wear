@@ -72,11 +72,11 @@ export default function Modal({ id, setIds}) {
                   <h1 className={`${ oswald.className } font-medium text-3xl`}>{ name }</h1>
                   <p className="font-bold text-2xl text-textGray">${ price.toFixed(2) }</p>
                   <p>{ description }</p>
-                  <div className="flex flex-row space-x-3 items-center !mt-5 max-w-sm pb-2 flex-wrap">
+                  <div className="flex flex-col sm:flex-row sm:space-x-3 sm:items-center justify-start sm:!mt-5 max-w-sm pb-2 flex-wrap">
                     <CartBtn />
-                    <button className="uppercase font-semibold flex-1 py-2 tracking-wider text-sm bg-darkOrange rounded-3xl text-[#F7F7F7]">Add to Cart</button>
+                    <button className="uppercase font-semibold flex-1 py-2 tracking-wider text-sm bg-darkOrange rounded-3xl text-[#F7F7F7] px-3 mt-3">Add to Cart</button>
                   </div>
-                  <div className="flex space-x-3 items-center border-t pt-2 text-sm">
+                  <div className="flex flex-col sm:flex-row sm:space-x-3 sm:items-center border-t pt-2 text-sm">
                     <div className="">Category: {" "} <span>{ category }</span></div>
                     <div>
                       Tags: {" "} 

@@ -5,7 +5,7 @@ import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
 
 export default function CartBtn() {
   return (
-            <div className="flex justify-between items-center bg-lightGrayishBlue sm:w-[100px] py-1 px-3 text-lg border border-[#a6a5ad]">
+            <div className="flex justify-between items-center bg-lightGrayishBlue w-[100px] py-1 px-3 text-lg border border-[#a6a5ad]">
                 <button
                 // onClick={cartSubstract}
                 className="hover:text-opacity-60"
