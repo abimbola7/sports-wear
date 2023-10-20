@@ -4,12 +4,15 @@ import React from 'react'
 import { BsArrowRight } from "react-icons/bs"
 import { oswald, montserrat } from '@/app/layout'
 import { collection, getDocs, query, where } from 'firebase/firestore'
+import { useDispatch } from 'react-redux'
+import { modalActions } from '@/store/modalSlice'
 import { db } from '../../firebase'
 import Card from './card'
 
 export default function LatestDrop() {
   const [ isLoading, setIsLoading ] = React.useState(false);
   const [ latestProducts, setLatestProducts ] = React.useState([]);
+  const dispatch = useDispatch();
 
   React.useEffect(()=> {
     const fetchLatestData  = async () => {
