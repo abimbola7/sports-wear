@@ -14,11 +14,12 @@ export default function Modal({ id, setIds}) {
   const dispatch = useDispatch();
   const showModal = useSelector(state=>state.modal.isToggled);
   const [ mounted, setMounted ] = React.useState(false);
-  const [ productData, setProductData ] = React.useState(false);
-  const { name, imageUrl, description, price, category, tags } = productData
+  const [ productData, setProductData ] = React.useState(null);
+  // const { name, imageUrl, description, price, category, tags } = productData
   const [ isLoading, setIsLoading ] = React.useState(false);
 
   const closeModal = () => {
+    setProductData(null)
     setIds(null)
     dispatch(modalActions.toggleModal());
     document.body.style.overflow = 'auto';
@@ -61,26 +62,26 @@ export default function Modal({ id, setIds}) {
                 </div>
                 <div className="border">
                   <Image
-                  src={imageUrl}
+                  src={productData.imageUrl}
                   alt="product"
                   width={600}
                   height={400}
                     />
                 </div>
                 <div className="border flex flex-col space-y-2 p-6 text-customBlack">
-                  <p>{ category }</p>
-                  <h1 className={`${ oswald.className } font-medium text-3xl`}>{ name }</h1>
-                  <p className="font-bold text-2xl text-textGray">${ price.toFixed(2) }</p>
-                  <p>{ description }</p>
+                  <p>{ productData.category }</p>
+                  <h1 className={`${ oswald.className } font-medium text-3xl`}>{ productData.name }</h1>
+                  <p className="font-bold text-2xl text-textGray">${ productData.price.toFixed(2) }</p>
+                  <p>{ productData.description }</p>
                   <div className="flex flex-col sm:flex-row sm:space-x-3 sm:items-center justify-start sm:!mt-5 max-w-sm pb-2 flex-wrap">
                     <CartBtn />
                     <button className="uppercase font-semibold flex-1 py-2 tracking-wider text-sm bg-darkOrange rounded-3xl text-[#F7F7F7] px-3 mt-3">Add to Cart</button>
                   </div>
                   <div className="flex flex-col sm:flex-row sm:space-x-3 sm:items-center border-t pt-2 text-sm">
-                    <div className="">Category: {" "} <span>{ category }</span></div>
+                    <div className="">Category: {" "} <span>{ productData.category }</span></div>
                     <div>
                       Tags: {" "} 
-                      <span>{ tags.join(", ") }</span>
+                      <span>{ productData.tags.join(", ") }</span>
                     </div>
                     {/* {
                       tags.map(tag=>)

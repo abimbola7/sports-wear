@@ -2,9 +2,8 @@ import './globals.css'
 import { Inter, Montserrat, Oswald } from 'next/font/google'
 import Header from '@/components/header'
 import Footer from '@/components/footer'
-import Modal from '@/components/modal'
 import Providers from '@/store/provider'
-import store from '@/store'
+import NextAuthSessionProvider from './provider/sessionProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 export const oswald = Oswald({
@@ -28,14 +27,16 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Providers
-        >
-          <Header/>
-          {/* <Modal /> */}
-          {children}
+        <NextAuthSessionProvider>
+          <Providers
+          >
+            <Header/>
+            {/* <Modal /> */}
+            {children}
 
-          <Footer />
-        </Providers>
+            <Footer />
+          </Providers>
+        </NextAuthSessionProvider>
       </body>
     </html>
   )

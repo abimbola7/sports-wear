@@ -1,10 +1,34 @@
+
+"use client"
 import Image from 'next/image'
 import React from 'react'
 import { oswald, montserrat } from '@/app/layout'
-
+import { useSelector, useDispatch } from 'react-redux';
+import { cartAction } from '@/store/cartSlice';
+import { fetchCart } from '@/store/contentSlice/';
+// import { contentAction } from '@/store/contentSlice';
+import { useSession } from 'next-auth/react';
 
 
 export default function Collection() {
+  const { data } = useSession();
+  const dispatch = useDispatch();
+  const cart = useSelector(state=>state.cart.cart);
+  const contents = useSelector((state) => state.content.contents)
+  const addToCart = () => {
+    dispatch(cartAction.addToCart({
+      name : "bimboola",
+      type : "refuse to say",
+      age : 23
+    }))
+    // dispatch(contentAction.add())
+    // console.log(await cart);
+  }
+
+
+
+  console.log(contents)
+
   return (
     <section>
       <div className="w-[90%] collection mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border">
@@ -13,6 +37,7 @@ export default function Collection() {
             SPARTA
             <span className='text-darkOrange'>X</span>
           </h2>
+          <button onClick={addToCart}>Click here</button>
           <div className="text-white text-center md:text-left">
             <h1 className={`text-4xl ${oswald.className}`}>Adventure Ready</h1>   
             <p className="mt-10">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo obcaecati error maiores</p>

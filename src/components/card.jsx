@@ -1,3 +1,5 @@
+"use client"
+
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
@@ -6,18 +8,34 @@ import { FaEye } from "react-icons/fa"
 import { IoIosCart } from "react-icons/io";
 import { useDispatch, useSelector } from 'react-redux';
 import { modalActions } from '@/store/modalSlice'
+import { useSession } from 'next-auth/react';
 import Modal from './modal'
+import { fetchCart } from '@/store/cartSlice'
 
 export default function Card({ imageUrl, name, price, id }) {
+  const { data }  = useSession();
   const dispatch = useDispatch();
   const [ ids, setIds ] = React.useState(null)
   const modal = useSelector(state=>state.modal.isToggled);
-  
+  let content;
   const openModal = () => {
     dispatch(modalActions.toggleModal());
-    setIds(null);
     setIds(id);
     document.body.style.overflow = 'hidden'
+  };
+
+  const addToCart = () => {
+    // dispatch(fetchCart(data?.user?.uid));
+    dispatch(fetchCart({
+      uid:data?.user?.uid, 
+      item:{
+        id : id,
+        name : name,
+        price : price,
+        imageUrl : imageUrl,
+        amount : 1
+      }
+    }));
   };
   return (
       <>
@@ -44,7 +62,9 @@ export default function Card({ imageUrl, name, price, id }) {
               className='hover:scale-110 duration-500 transition-transform ease-out'
               />
             </Link>
-            <span className="top-4 icons"><IoIosCart/></span>
+            <span 
+            onClick={addToCart}
+            className="top-4 icons"><IoIosCart/></span>
             <span 
             className="top-16 icons"
             onClick={openModal}
