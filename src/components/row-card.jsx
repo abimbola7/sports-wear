@@ -10,11 +10,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { modalActions } from '@/store/modalSlice'
 import { useSession } from 'next-auth/react';
 import Modal from './modal'
-import { useRouter } from 'next/navigation'
 import { fetchCart } from '@/store/cartSlice'
 
-export default function Card({ imageUrl, name, price, id }) {
-  const router = useRouter();
+
+export default function RowCard( { imageUrl, name, price, id, desc } ) {
   const { data }  = useSession();
   const dispatch = useDispatch();
   const [ ids, setIds ] = React.useState(null)
@@ -25,7 +24,6 @@ export default function Card({ imageUrl, name, price, id }) {
     setIds(id);
     document.body.style.overflow = 'hidden'
   };
-
   const addToCart = () => {
     // dispatch(fetchCart(data?.user?.uid));
     dispatch(fetchCart({
@@ -40,7 +38,7 @@ export default function Card({ imageUrl, name, price, id }) {
     }));
   };
   return (
-      <>
+    <>
         { modal &&
           <Modal
           name={name}
@@ -49,22 +47,21 @@ export default function Card({ imageUrl, name, price, id }) {
           id={ids}
           />
         }
-        <div>
-          <div className='relative group overflow-hidden'>
-            <div
-            className='cursor-pointer'
-            onClick={()=>router.push(`/products/${id}`)}
-            >
-              <Image 
-              src={imageUrl}
-              alt="products"
-              width={300}
-              height={200}
-              placeholder='blur'
-              blurDataURL='/loading.svg'
-              className='hover:scale-110 duration-500 transition-transform ease-out'
-              />
-            </div>
+        <div className='grid grid-cols-3 w-full group'>
+          <div className='overflow-hidden relative'>
+            <Link 
+              href={`products/${id}`}
+              >
+                <Image 
+                src={imageUrl}
+                alt="products"
+                width={300}
+                height={200}
+                placeholder='blur'
+                blurDataURL='/loading.svg'
+                className='group-hover:scale-110 duration-500 transition-transform ease-out'
+                />
+            </Link>
             <span 
             onClick={addToCart}
             className="top-4 icons"><IoIosCart/></span>
@@ -74,14 +71,12 @@ export default function Card({ imageUrl, name, price, id }) {
             ><FaEye /></span>
           </div>
 
-          <div className='p-3'>
-            <div 
-            className={`${oswald.className} font-medium cursor-pointer`} 
-            onClick={()=>router.push(`/products/${id}`)}
-            > <h1>{name}</h1></div>
+          <div className='col-span-2 flex flex-col justify-center p-3'>
+            <Link className={`${oswald.className} font-medium`} href={`products/${id}`}> <h1>{name}</h1></Link>
             <p className={`${montserrat.className} font-bold text-sm text-textGray`}>${price.toFixed(2)}</p>
+            <p className={ `${montserrat.className} text-sm mt-2 line-clamp-2 sm:line-clamp-none` }>{desc}</p>
           </div>
         </div>
-      </>
+    </>
   )
 }

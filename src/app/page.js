@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux'
 import { cartAction } from '@/store/cartSlice'
 import { collection, getDocs, query, where } from 'firebase/firestore'
 import { db } from '../../firebase'
+import Explore from '@/components/explore'
 
 export default function Home() {
   // React.useEffect(()=>{
@@ -36,6 +37,7 @@ export default function Home() {
       <Fitness />
       <Banner />
       <Collection />
+      <Explore />
     </>
   )
 }

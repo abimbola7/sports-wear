@@ -1,17 +1,19 @@
 "use client"
-import Link from 'next/link'
+import Card from '@/components/card';
+import RowCard from '@/components/row-card';
+import { collection, getDocs, query, where } from 'firebase/firestore';
+import Link from 'next/link';
 import React from 'react'
-import { montserrat, oswald } from '../layout'
-import { VscSettings } from "react-icons/vsc"
-import { HiViewGrid } from "react-icons/hi";
-import { FaThList } from "react-icons/fa";
-import Card from '@/components/card'
-import { collection, getDocs, query, where } from 'firebase/firestore'
-import { db } from '../../../firebase'
-import RowCard from '@/components/row-card'
+import { FaThList } from 'react-icons/fa';
+import { HiViewGrid } from 'react-icons/hi';
+import { VscSettings } from 'react-icons/vsc';
+import { db } from '../../../../firebase';
+import { montserrat, oswald } from '@/app/layout';
+import { usePathname } from 'next/navigation';
 
-
-export default function Products() {
+export default function Men(params) {
+  const pathname = usePathname();
+  console.log(pathname)
   const [ layout, setLayout ] = React.useState('grid');
   const [ isLoading, setIsLoading  ] = React.useState(false);
   const [ products, setProducts ] = React.useState([])
@@ -19,7 +21,7 @@ export default function Products() {
   React.useEffect(()=> {
     const fetchData  = async () => {
       setIsLoading(true)
-      const q = query(collection(db, "products"));
+      const q = query(collection(db, "products"), where('category', 'array-contains', 'Men'));
       await getDocs(q)
       .then(querySnaphot => {
         const newData = querySnaphot.docs.map(doc=>(
@@ -27,6 +29,7 @@ export default function Products() {
             ...doc.data(), id:doc.id
           }
         ))
+        console.log(newData)
         setProducts(newData);
         setIsLoading(false);
       })
@@ -40,7 +43,7 @@ export default function Products() {
     >
     <div className={`flex text-textGray ${montserrat.className} text-md`}>
       <Link href={"/"} className="mr-1">Home </Link> {" / "}
-      <p className='ml-1'>Shop</p>
+      <p className='ml-1'>Men</p>
     </div>
     <div
     className='flex justify-between items-center text-textGray my-10 sticky top-0 z-[10]'

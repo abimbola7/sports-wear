@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { collection, doc, getDocs, getFirestore, query, setDoc, updateDoc, where } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, getFirestore, query, queryEqual, setDoc, updateDoc, where } from "firebase/firestore";
 import { db } from "../../firebase";
 
 const initialCartState = {
@@ -55,18 +55,11 @@ export const fetchCart = createAsyncThunk(
   "content/fetchCart",
   async (dat, {dispatch, getState }) => {
     const { uid, item } = dat
-    // console.log(carts)
     dispatch(cartAction.addToCart(item));
-    console.log(item)
     const carts = getState().cart.cart;
-    console.log(carts)
     const db = getFirestore();
-    const collectionRef = collection(db, 'carts', dat.uid, 'cartData');
-
-    const snapshot = await getDocs(collectionRef);
-    console.log(snapshot)
-    const data = snapshot.docs.map((doc) => ( doc.data().cart ));
-    return data[0];
+    const collectionRef = doc(db, 'carts', dat.uid);
+    await setDoc(collectionRef, { cart: carts }, { merge: true })
   }
 );
 
@@ -77,19 +70,16 @@ export const fetchShoeData = (data) => {
             const fetchData = async () => {
               if (data) {
                 console.log(data, "dataaaaa")
-                const q = collection(db, "carts", data?.user?.uid, 'cartData');
-                const querySnapShot = await getDocs(q);
-                if (querySnapShot.empty){
-                  await setDoc(doc(q), {
+                const q = doc(db, "carts", data?.user?.uid);
+                const querySnapShot = await getDoc(q)
+                console.log(querySnapShot.exists())
+                if (querySnapShot.exists()){
+                  console.log('User already exists');
+                  dispatch(cartAction.setCart(querySnapShot?.data().cart))
+                } else {
+                  await setDoc(q, {
                     cart : []
                   })
-                } else {
-                  const cartData = [];
-                  querySnapShot.forEach((doc) => {
-                    cartData.push( ...doc.data().cart );
-                  });
-                  dispatch(cartAction.setCart(cartData))
-                  
                 }
               }
             }

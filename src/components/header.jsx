@@ -53,8 +53,17 @@ export default function Header() {
         </Link>
         <ul className='space-x-6 hidden md:inline-flex'>
           {
-            ['SHOP ALL', 'MEN', 'WOMEN', 'TOP DEALS'].map((item, index) => (
-              <li key={index} className='text-xs font-medium cursor-pointer hover:text-darkOrange'>{item}</li>
+            [
+              ['SHOP ALL', '/products'], ['MEN', '/products/men'], ['WOMEN', '/products/women'], ['TOP DEALS', 'top-deals']
+            ].map(([item, url]) => (
+              <Link 
+              key={item}
+              href={url}>
+                <li 
+                className='text-xs font-medium cursor-pointer hover:text-darkOrange'>
+                  {item}
+                </li>
+              </Link>
             ))
           }
         </ul>
@@ -79,7 +88,7 @@ export default function Header() {
                   onClick={signOut}
                   src={data?.user?.image} 
                   alt='' 
-                  className='rounded-full h-10 cursor-pointer flex-shrink-0'/>
+                  className='rounded-full h-8 cursor-pointer flex-shrink-0'/>
                 )
               }
           </div> 

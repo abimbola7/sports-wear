@@ -5,8 +5,6 @@ import React from 'react'
 import { oswald, montserrat } from '@/app/layout'
 import { useSelector, useDispatch } from 'react-redux';
 import { cartAction } from '@/store/cartSlice';
-import { fetchCart } from '@/store/contentSlice/';
-// import { contentAction } from '@/store/contentSlice';
 import { useSession } from 'next-auth/react';
 
 
@@ -14,7 +12,6 @@ export default function Collection() {
   const { data } = useSession();
   const dispatch = useDispatch();
   const cart = useSelector(state=>state.cart.cart);
-  const contents = useSelector((state) => state.content.contents)
   const addToCart = () => {
     dispatch(cartAction.addToCart({
       name : "bimboola",
@@ -27,7 +24,6 @@ export default function Collection() {
 
 
 
-  console.log(contents)
 
   return (
     <section>

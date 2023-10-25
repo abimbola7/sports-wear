@@ -66,7 +66,9 @@ export default function Modal({ id, setIds}) {
                   alt="product"
                   width={600}
                   height={400}
-                    />
+                  placeholder='blur'
+                  blurDataURL='/spinner.svg'
+                  />
                 </div>
                 <div className="border flex flex-col space-y-2 p-6 text-customBlack">
                   <p>{ productData.category }</p>
