@@ -4,6 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialModalState = {
   isToggled : false,
+  cartIsToggled  : false
 }
 
 
@@ -13,6 +14,9 @@ const modalSlice  = createSlice({
   reducers : {
     toggleModal(state, action) {
       state.isToggled = !state.isToggled
+    },
+    toggleCart(state, action) {
+      state.cartIsToggled = !state.cartIsToggled
     }
   }
 })

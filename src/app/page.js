@@ -12,6 +12,7 @@ import { cartAction } from '@/store/cartSlice'
 import { collection, getDocs, query, where } from 'firebase/firestore'
 import { db } from '../../firebase'
 import Explore from '@/components/explore'
+import CartModal from '@/components/cartmodal'
 
 export default function Home() {
   // React.useEffect(()=>{
@@ -30,6 +31,7 @@ export default function Home() {
 
   return (
     <>
+      <CartModal />
       <Hero />
       <Category/>
       <Trending />

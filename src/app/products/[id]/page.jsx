@@ -1,5 +1,6 @@
 "use client"
-
+import { useSession } from 'next-auth/react';
+import { useRef } from 'react';
 import React from 'react'
 import { fetchProduct } from '@/store/productSlice';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,16 +8,32 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { montserrat, oswald } from '@/app/layout';
 import CartBtn from '@/components/cart-btn';
+import { fetchCart } from '@/store/cartSlice';
 
 export default function ProductItem({ params }) {
+  const { data } = useSession();
   const dispatch = useDispatch();
   const product = useSelector(state=>state.product.product);
   const loading = useSelector(state=>state.product.isLoading);
   const error = useSelector(state=>state.product.error);
+  const amountRef = useRef();
 
   React.useEffect(()=>{
     dispatch(fetchProduct(params.id))
   }, [dispatch, params.id])
+  
+  const addToCart = () => {
+    dispatch(fetchCart({
+      uid:data?.user?.uid, 
+      item:{
+        id : product.id,
+        name : product.name,
+        price : product.price,
+        imageUrl : product.imageUrl,
+        amount : +amountRef.current.value
+      }
+    }));
+  };
 
   return (
     <>
@@ -83,8 +100,12 @@ export default function ProductItem({ params }) {
                     <p className="font-bold text-2xl text-textGray">${ product?.price?.toFixed(2) }</p>
                     <p className='text-textGray font-normal'>{ product?.description }</p>
                     <div className="flex flex-col sm:flex-row sm:space-x-3 sm:items-center justify-start sm:!mt-5 max-w-sm pb-2 flex-wrap">
-                      <CartBtn />
-                      <button className="uppercase font-semibold flex-1 py-2 tracking-wider text-sm bg-darkOrange rounded-3xl text-[#F7F7F7] px-3 mt-3">Add to Cart</button>
+                      <CartBtn
+                      ref={amountRef}
+                       />
+                      <button
+                      onClick={addToCart}
+                       className="uppercase font-semibold flex-1 py-2 tracking-wider text-sm bg-darkOrange rounded-3xl text-[#F7F7F7] px-3 mt-3">Add to Cart</button>
                     </div>
                     <div className="flex flex-col sm:flex-row sm:space-x-3 sm:items-center border-t pt-2 text-sm">
                       <div className="">Category: {" "} <span>{ product?.category?.join(', ') }</span></div>

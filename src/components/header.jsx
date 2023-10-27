@@ -1,21 +1,30 @@
 "use client"
-import React from 'react'
+import React, { useMemo } from 'react'
 import { AiOutlineMenu, AiOutlineSearch } from "react-icons/ai"
 import { PiShoppingCartFill } from "react-icons/pi" 
 import { CgProfile } from "react-icons/cg" 
 import { montserrat, oswald } from '@/app/layout';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
+import { modalActions } from '@/store/modalSlice'
 import { fetchShoeData } from '@/store/cartSlice'
 import {signIn, signOut, useSession } from 'next-auth/react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 
 export default function Header() {
+  const carts = useSelector(state=>state.cart.cart)
+  const updatedCarts = useMemo(() => carts, [carts])
+  const [ totaAmount, setTotalAmount ] = React.useState(0)
   const dispatch = useDispatch();
   const [isScrolled, setIsScrolled] = React.useState(false);
   const { data } = useSession();
   const pathname = usePathname();
+  React.useEffect(()=>{
+    setTotalAmount(
+      updatedCarts?.reduce((total, item)=>total + item.amount, 0)
+    )
+  }, [updatedCarts])
   // React.useEffect(() => {
   // const scrollHandler = () =>{
   //   if (window.scrollY > 100) {
@@ -75,8 +84,10 @@ export default function Header() {
               <AiOutlineSearch className="icon"/>
               <p>$0.00</p>
               <div className='relative'>
-                <div className='absolute -top-1 left-4 rounded-full bg-darkOrange text-white px-1 text-xs'>0</div>
-                <PiShoppingCartFill className='text-2xl text-darkOrange cursor-pointer'/>
+                <div className='absolute pointer-events-none -top-1 left-4 rounded-full bg-darkOrange text-white px-1 text-xs'>{ totaAmount }</div>
+                <PiShoppingCartFill 
+                onClick={()=>dispatch(modalActions.toggleCart())}
+                className='text-2xl text-darkOrange cursor-pointer'/>
               </div>
               {
                 !data ? (

@@ -9,30 +9,24 @@ import Card from '@/components/card'
 import { collection, getDocs, query, where } from 'firebase/firestore'
 import { db } from '../../../firebase'
 import RowCard from '@/components/row-card'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchProducts } from '@/store/productsSlice'
 
 
 export default function Products() {
+  const reduxProducts = useSelector(state=>state.products.products);
+  const reduxIsLoading = useSelector(state=>state.products.isLoading);
+  const reduxError = useSelector(state=>state.products.error);
+  console.log(reduxIsLoading)
+  const dispatch = useDispatch();
   const [ layout, setLayout ] = React.useState('grid');
   const [ isLoading, setIsLoading  ] = React.useState(false);
   const [ products, setProducts ] = React.useState([])
 
-  React.useEffect(()=> {
-    const fetchData  = async () => {
-      setIsLoading(true)
-      const q = query(collection(db, "products"));
-      await getDocs(q)
-      .then(querySnaphot => {
-        const newData = querySnaphot.docs.map(doc=>(
-          {
-            ...doc.data(), id:doc.id
-          }
-        ))
-        setProducts(newData);
-        setIsLoading(false);
-      })
-    }
-    fetchData();
-  }, [])
+  React.useEffect(()=>{
+    console.log("does it work")
+    dispatch(fetchProducts())
+  }, [dispatch])
 
   return (
     <main
@@ -59,7 +53,7 @@ export default function Products() {
       </div>
     </div>
     {
-          isLoading ? (
+          reduxIsLoading && reduxProducts.length === 0 ? (
             <div className='flex justify-center'>
               <img 
               src="/spinner.svg" 
@@ -71,7 +65,7 @@ export default function Products() {
                   layout === "grid" ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-items-center">
                       {
-                        products && products.map(latest=>(
+                        reduxProducts && reduxProducts.map(latest=>(
                           <Card 
                           key={latest.id}
                           id={latest.id}
@@ -85,7 +79,7 @@ export default function Products() {
                   ) : (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 justify-items-center">
                       {
-                        products && products.map(latest=>(
+                        reduxProducts && reduxProducts.map(latest=>(
                           <RowCard 
                           key={latest.id}
                           id={latest.id}

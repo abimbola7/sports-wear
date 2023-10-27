@@ -20,6 +20,8 @@ const productSlice = createSlice({
     builder.addCase(fetchProduct.fulfilled, (state, action) => {
       state.isLoading = false;
       state.product = action.payload
+      console.log(state.product)
+
     });
     builder.addCase(fetchProduct.rejected, (state, action) => {
       state.isLoading = false;
@@ -33,7 +35,8 @@ export const fetchProduct = createAsyncThunk(
   async (id, { dispatch, getState }) => {
     const eventRef = doc(db, 'products', id);
     const querySnapshot = await getDoc(eventRef)
-    return querySnapshot.data()
+    console.log(querySnapshot.id)
+    return {...querySnapshot.data(), id: querySnapshot.id}
   }
 )
 
