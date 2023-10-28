@@ -34,14 +34,14 @@ export default function LatestDrop() {
 
   return (
     <section className='px-4'>
-      <div className='max-w-7xl mx-auto'>
+      <div className='mx-auto max-w-7xl'>
         <div className={`flex items-center justify-between ${oswald.className} text-xl my-10`}>
           <h2 className='text-2xl font-medium'>The Latest Drop</h2>
           <Link
           href="products"
           className='text-darkOrange hover:text-customBlack'
           >SHOP ALL
-          <BsArrowRight className='inline-flex ml-1 pb-1'/>
+          <BsArrowRight className='inline-flex pb-1 ml-1'/>
           </Link>
         </div>
         {
@@ -52,7 +52,7 @@ export default function LatestDrop() {
               alt="" className='h-20'/>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-items-center">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-items-center">
               {
                 latestProducts && latestProducts.map(latest=>(
                   <Card 
@@ -61,6 +61,7 @@ export default function LatestDrop() {
                   imageUrl={latest.imageUrl}
                   name={latest.name}
                   price={latest.price}
+                  amount={latest.amount}
                   />
                 ))
               }

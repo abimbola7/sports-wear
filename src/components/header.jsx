@@ -16,6 +16,7 @@ export default function Header() {
   const carts = useSelector(state=>state.cart.cart)
   const updatedCarts = useMemo(() => carts, [carts])
   const [ totaAmount, setTotalAmount ] = React.useState(0)
+  const [ totalPrice, setTotalPrice ] = React.useState(0)
   const dispatch = useDispatch();
   const [isScrolled, setIsScrolled] = React.useState(false);
   const { data } = useSession();
@@ -23,6 +24,9 @@ export default function Header() {
   React.useEffect(()=>{
     setTotalAmount(
       updatedCarts?.reduce((total, item)=>total + item.amount, 0)
+    )
+    setTotalPrice(
+      updatedCarts?.reduce((total, item)=>total + (item.amount * item.price), 0)
     )
   }, [updatedCarts])
   // React.useEffect(() => {
@@ -50,7 +54,7 @@ export default function Header() {
     <header 
     className={`${montserrat.className} font-extrabold z-[100000] transition-colors duration-500 !bg-transparent`}>
       <div
-      className='flex items-center justify-between mx-auto max-w-7xl py-4 px-4 md:px-2'
+      className='flex items-center justify-between px-4 py-4 mx-auto max-w-7xl md:px-2'
       >
       {/* left */}
        <div className="flex items-center space-x-10">
@@ -60,7 +64,7 @@ export default function Header() {
           SPARTA
           <span className='text-darkOrange'>X</span>
         </Link>
-        <ul className='space-x-6 hidden md:inline-flex'>
+        <ul className='hidden space-x-6 md:inline-flex'>
           {
             [
               ['SHOP ALL', '/products'], ['MEN', '/products/men'], ['WOMEN', '/products/women'], ['TOP DEALS', 'top-deals']
@@ -80,14 +84,14 @@ export default function Header() {
 
        {/* right */}
        {
-          <div className='font-medium text-darkOrange space-x-4 hidden md:inline-flex items-center'>
+          <div className='items-center hidden space-x-4 font-medium text-darkOrange md:inline-flex'>
               <AiOutlineSearch className="icon"/>
-              <p>$0.00</p>
+              <p>${totalPrice.toFixed(2)}</p>
               <div className='relative'>
-                <div className='absolute pointer-events-none -top-1 left-4 rounded-full bg-darkOrange text-white px-1 text-xs'>{ totaAmount }</div>
+                <div className='absolute px-1 text-xs text-white rounded-full pointer-events-none -top-1 left-4 bg-darkOrange'>{ totaAmount }</div>
                 <PiShoppingCartFill 
                 onClick={()=>dispatch(modalActions.toggleCart())}
-                className='text-2xl text-darkOrange cursor-pointer'/>
+                className='text-2xl cursor-pointer text-darkOrange'/>
               </div>
               {
                 !data ? (
@@ -99,14 +103,14 @@ export default function Header() {
                   onClick={signOut}
                   src={data?.user?.image} 
                   alt='' 
-                  className='rounded-full h-8 cursor-pointer flex-shrink-0'/>
+                  className='flex-shrink-0 h-8 rounded-full cursor-pointer'/>
                 )
               }
           </div> 
        }
 
-       <div className="p-2 bg-darkOrange rounded-sm md:hidden">
-          <AiOutlineMenu className='cursor-pointer text-xl'/>
+       <div className="p-2 rounded-sm bg-darkOrange md:hidden">
+          <AiOutlineMenu className='text-xl cursor-pointer'/>
        </div>
       </div>
     </header>

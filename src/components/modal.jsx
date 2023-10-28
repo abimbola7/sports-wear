@@ -10,7 +10,7 @@ import { oswald, montserrat } from "@/app/layout";
 import CartBtn from "./cart-btn";
 import { LiaTimesSolid } from "react-icons/lia";
 
-export default function Modal({ id, setIds}) {
+export default function Modal({ id, setIds, amount}) {
   const dispatch = useDispatch();
   const showModal = useSelector(state=>state.modal.isToggled);
   const [ mounted, setMounted ] = React.useState(false);
@@ -50,7 +50,7 @@ export default function Modal({ id, setIds}) {
       {!isLoading ? (
         <>
           <div
-            className="justify-center items-center flex overflow-x-hidden fixed inset-0  z-50 outline-none focus:outline-none"
+            className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden outline-none focus:outline-none"
           >
             <div className="relative w-[70rem] my-6 mx-auto max-w-[85%] pt-16 sm:pt-0">
               {/*content*/}
@@ -70,16 +70,16 @@ export default function Modal({ id, setIds}) {
                   blurDataURL='/spinner.svg'
                   />
                 </div>
-                <div className="border flex flex-col space-y-2 p-6 text-customBlack">
+                <div className="flex flex-col p-6 space-y-2 border text-customBlack">
                   <p>{ productData.category }</p>
                   <h1 className={`${ oswald.className } font-medium text-3xl`}>{ productData.name }</h1>
-                  <p className="font-bold text-2xl text-textGray">${ productData.price.toFixed(2) }</p>
+                  <p className="text-2xl font-bold text-textGray">${ productData.price.toFixed(2) }</p>
                   <p>{ productData.description }</p>
                   <div className="flex flex-col sm:flex-row sm:space-x-3 sm:items-center justify-start sm:!mt-5 max-w-sm pb-2 flex-wrap">
-                    <CartBtn />
+                    <CartBtn amount={amount} />
                     <button className="uppercase font-semibold flex-1 py-2 tracking-wider text-sm bg-darkOrange rounded-3xl text-[#F7F7F7] px-3 mt-3">Add to Cart</button>
                   </div>
-                  <div className="flex flex-col sm:flex-row sm:space-x-3 sm:items-center border-t pt-2 text-sm">
+                  <div className="flex flex-col pt-2 text-sm border-t sm:flex-row sm:space-x-3 sm:items-center">
                     <div className="">Category: {" "} <span>{ productData.category }</span></div>
                     <div>
                       Tags: {" "} 
@@ -94,7 +94,7 @@ export default function Modal({ id, setIds}) {
             </div>
           </div>
           <div 
-          className="opacity-50 inset-0 z-40 bg-black fixed overflow-y-auto"
+          className="fixed inset-0 z-40 overflow-y-auto bg-black opacity-50"
           ></div>
         </>
       ) : null}

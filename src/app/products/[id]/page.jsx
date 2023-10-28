@@ -31,7 +31,8 @@ export default function ProductItem({ params }) {
         price : product.price,
         imageUrl : product.imageUrl,
         amount : +amountRef.current.value
-      }
+      }, 
+      type : "PRODUCT"
     }));
   };
 
@@ -39,7 +40,7 @@ export default function ProductItem({ params }) {
     <>
       {
         loading && !error && Object.keys(product).length === 0 && (
-          <div className='min-h-screen w-full flex items-center justify-center'>
+          <div className='flex items-center justify-center w-full min-h-screen'>
             <img src="/spinner.svg"/>
           </div>
         )
@@ -47,7 +48,7 @@ export default function ProductItem({ params }) {
       {
         !loading && !error && Object.keys(product).length !== 0 && (
           <div className="min-h-screen max-w-[87rem] lg:mx-auto mt-14 bg-white px-5 md:px-24 mx-5">
-            <div className='py-8 md:py-32 w-full grid grid-cols-1 md:grid-cols-2 md:gap-x-10 gap-y-8 md:gap-y-0'>
+            <div className='grid w-full grid-cols-1 py-8 md:py-32 md:grid-cols-2 md:gap-x-10 gap-y-8 md:gap-y-0'>
                 <div className="">
                   <Image
                   src={product.imageUrl}
@@ -95,19 +96,20 @@ export default function ProductItem({ params }) {
                     }
                   </div>
 
-                  <div className="flex flex-col space-y-2 text-customBlack mt-4">
+                  <div className="flex flex-col mt-4 space-y-2 text-customBlack">
                     <h1 className={`${ oswald.className } font-medium text-3xl`}>{ product?.name }</h1>
-                    <p className="font-bold text-2xl text-textGray">${ product?.price?.toFixed(2) }</p>
-                    <p className='text-textGray font-normal'>{ product?.description }</p>
+                    <p className="text-2xl font-bold text-textGray">${ product?.price?.toFixed(2) }</p>
+                    <p className='font-normal text-textGray'>{ product?.description }</p>
                     <div className="flex flex-col sm:flex-row sm:space-x-3 sm:items-center justify-start sm:!mt-5 max-w-sm pb-2 flex-wrap">
                       <CartBtn
+                      amount={product?.amount}
                       ref={amountRef}
                        />
                       <button
                       onClick={addToCart}
                        className="uppercase font-semibold flex-1 py-2 tracking-wider text-sm bg-darkOrange rounded-3xl text-[#F7F7F7] px-3 mt-3">Add to Cart</button>
                     </div>
-                    <div className="flex flex-col sm:flex-row sm:space-x-3 sm:items-center border-t pt-2 text-sm">
+                    <div className="flex flex-col pt-2 text-sm border-t sm:flex-row sm:space-x-3 sm:items-center">
                       <div className="">Category: {" "} <span>{ product?.category?.join(', ') }</span></div>
                       <div>
                         Tags: {" "} 

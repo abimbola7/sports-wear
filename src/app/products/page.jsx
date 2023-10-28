@@ -43,7 +43,7 @@ export default function Products() {
         <VscSettings className='text-xl rotate-90'/>
         <span className='ml-2'>Filter</span>
       </p>
-      <div className='flex space-x-3 items-center'>
+      <div className='flex items-center space-x-3'>
         <HiViewGrid 
         onClick={()=>setLayout('grid')}
         className={`text-3xl transition-transform hover:scale-110 duration-200 ease-out cursor-pointer ${ layout === "grid" && 'text-darkOrange'}`}/>
@@ -63,10 +63,11 @@ export default function Products() {
               <>
                 {
                   layout === "grid" ? (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-items-center">
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-items-center">
                       {
                         reduxProducts && reduxProducts.map(latest=>(
                           <Card 
+                          amount={latest.amount}
                           key={latest.id}
                           id={latest.id}
                           imageUrl={latest.imageUrl}
@@ -77,7 +78,7 @@ export default function Products() {
                       }
                     </div>
                   ) : (
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 justify-items-center">
+                    <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 justify-items-center">
                       {
                         reduxProducts && reduxProducts.map(latest=>(
                           <RowCard 
@@ -87,6 +88,7 @@ export default function Products() {
                           name={latest.name}
                           price={latest.price}
                           desc={latest.description}
+                          amount={latest.amount}
                           />
                         ))
                       }

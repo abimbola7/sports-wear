@@ -13,7 +13,7 @@ import Modal from './modal'
 import { fetchCart } from '@/store/cartSlice'
 
 
-export default function RowCard( { imageUrl, name, price, id, desc } ) {
+export default function RowCard( { imageUrl, name, price, id, desc, amount } ) {
   const { data }  = useSession();
   const dispatch = useDispatch();
   const [ ids, setIds ] = React.useState(null)
@@ -47,8 +47,8 @@ export default function RowCard( { imageUrl, name, price, id, desc } ) {
           id={ids}
           />
         }
-        <div className='grid grid-cols-3 w-full group'>
-          <div className='overflow-hidden relative'>
+        <div className='grid w-full grid-cols-3 group'>
+          <div className='relative overflow-hidden'>
             <Link 
               href={`products/${id}`}
               >
@@ -59,7 +59,7 @@ export default function RowCard( { imageUrl, name, price, id, desc } ) {
                 height={200}
                 placeholder='blur'
                 blurDataURL='/loading.svg'
-                className='group-hover:scale-110 duration-500 transition-transform ease-out'
+                className='transition-transform duration-500 ease-out group-hover:scale-110'
                 />
             </Link>
             <span 
@@ -71,7 +71,7 @@ export default function RowCard( { imageUrl, name, price, id, desc } ) {
             ><FaEye /></span>
           </div>
 
-          <div className='col-span-2 flex flex-col justify-center p-3'>
+          <div className='flex flex-col justify-center col-span-2 p-3'>
             <Link className={`${oswald.className} font-medium`} href={`products/${id}`}> <h1>{name}</h1></Link>
             <p className={`${montserrat.className} font-bold text-sm text-textGray`}>${price.toFixed(2)}</p>
             <p className={ `${montserrat.className} text-sm mt-2 line-clamp-2 sm:line-clamp-none` }>{desc}</p>

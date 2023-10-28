@@ -11,7 +11,7 @@ import { CgArrowTopRightR } from 'react-icons/cg'
 export default function CartModal() {
   const dispatch = useDispatch();
   const carts = useSelector(state=>state.cart.cart);
-  const cartModal = useSelector(state=>state.modal.cartIsToggled)
+  const cartModal = useSelector(state=>state.modal.cartIsToggled);
   console.log(cartModal);
   return (
     <>
@@ -19,7 +19,7 @@ export default function CartModal() {
         cartModal && (
           <div 
           onClick={()=>dispatch(modalActions.toggleCart())}
-          className='w-full h-screen fixed bg-black bg-opacity-40 top-0' />
+          className='fixed top-0 w-full h-screen bg-black bg-opacity-40' />
         )
       }
       {
@@ -41,11 +41,12 @@ export default function CartModal() {
           {
             carts && carts.length > 0 && (
               <>
-                <div className='w-full h-96 overflow-auto'>
+                <div className='w-full overflow-auto h-96'>
                   {
                     carts.map(cart=>(
                       <SideCart 
                       key={cart.id}
+                      id={cart.id}
                       name={cart.name}
                       imageUrl={cart.imageUrl}
                       price={cart.price}
@@ -57,8 +58,8 @@ export default function CartModal() {
               </>
             )
           }
-          <div className='absolute bottom-4 w-full px-4'>
-            <button className='bg-darkOrange uppercase font-semibold text-white py-3 px-4 rounded-3xl w-full'>Continue Shopping</button>
+          <div className='absolute w-full px-4 bottom-4'>
+            <button className='w-full px-4 py-3 font-semibold text-white uppercase bg-darkOrange rounded-3xl'>Continue Shopping</button>
           </div>
         </div>
         )

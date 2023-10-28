@@ -5,7 +5,7 @@
 import React, { forwardRef } from 'react'
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
 
-const CartBtn = React.forwardRef(
+const CartButton = React.forwardRef(
   (props, ref) => {
 
     const cartSubstract = () => {
@@ -16,6 +16,7 @@ const CartBtn = React.forwardRef(
     }
     const cartAdd = () => {
       ref.current.value++
+      props.add()
     }
     return (
               <div className="flex justify-between items-center bg-lightGrayishBlue w-[100px] px-3 text-lg border border-[#a6a5ad] font-extralight">
@@ -43,4 +44,4 @@ const CartBtn = React.forwardRef(
 ) 
 
 
-export default CartBtn;
+export default CartButton;

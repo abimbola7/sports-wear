@@ -14,12 +14,16 @@ const cartSlice = createSlice({
   initialState : initialCartState,
   reducers : {
     addToCart(state, action) {
-      console.log(action.payload)
-      const existingItem = state.cart.find(item=>item.id === action.payload.id)
+      console.log(action.payload.item)
+      const existingItem = state.cart.find(item=>item.id === action.payload.item.id)
       if (existingItem) {
-        existingItem.amount  = action.payload.amount;
+        if (action.payload.type === "PRODUCT") {
+          existingItem.amount  = action.payload.item.amount; 
+        } else{
+          existingItem.amount++
+        }
       } else {
-        state.cart.push(action.payload);
+        state.cart.push(action.payload.item);
       }
       console.log(state.cart)
     },
@@ -54,11 +58,14 @@ const cartSlice = createSlice({
 export const fetchCart = createAsyncThunk(
   "content/fetchCart",
   async (dat, {dispatch, getState }) => {
-    const { uid, item } = dat
-    dispatch(cartAction.addToCart(item));
+    const { uid, item, type } = dat
+    console.log(type)
+    dispatch(cartAction.addToCart({item, type}));
     const carts = getState().cart.cart;
+    // console.log(carts);
     const db = getFirestore();
     const collectionRef = doc(db, 'carts', dat.uid);
+    console.log(collectionRef)
     await setDoc(collectionRef, { cart: carts }, { merge: true })
   }
 );

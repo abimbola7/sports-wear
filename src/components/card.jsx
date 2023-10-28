@@ -13,7 +13,7 @@ import Modal from './modal'
 import { useRouter } from 'next/navigation'
 import { fetchCart } from '@/store/cartSlice'
 
-export default function Card({ imageUrl, name, price, id }) {
+export default function Card({ imageUrl, name, price, id, amount }) {
   const router = useRouter();
   const { data }  = useSession();
   const dispatch = useDispatch();
@@ -36,13 +36,14 @@ export default function Card({ imageUrl, name, price, id }) {
         price : price,
         imageUrl : imageUrl,
         amount : 1
-      }
+      },
     }));
   };
   return (
       <>
         { modal &&
           <Modal
+          amount={amount}
           name={name}
           price={price}
           setIds={setIds}
@@ -50,7 +51,7 @@ export default function Card({ imageUrl, name, price, id }) {
           />
         }
         <div>
-          <div className='relative group overflow-hidden'>
+          <div className='relative overflow-hidden group'>
             <div
             className='cursor-pointer'
             onClick={()=>router.push(`/products/${id}`)}
@@ -62,7 +63,7 @@ export default function Card({ imageUrl, name, price, id }) {
               height={200}
               placeholder='blur'
               blurDataURL='/loading.svg'
-              className='hover:scale-110 duration-500 transition-transform ease-out'
+              className='transition-transform duration-500 ease-out hover:scale-110'
               />
             </div>
             <span 
