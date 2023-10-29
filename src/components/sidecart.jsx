@@ -6,7 +6,8 @@ import { MdOutlineCancel } from 'react-icons/md';
 import CartButton from './cartBtn1';
 import { useSelector, useDispatch } from 'react-redux';
 import { useSession } from 'next-auth/react';
-import { fetchCart } from '@/store/cartSlice';
+import { cartAction, clearedCart, fetchCart } from '@/store/cartSlice';
+import { LiaTimesCircle } from 'react-icons/lia';
 
 
 export default function SideCart({ id, name, imageUrl, price, amount }) {
@@ -26,6 +27,7 @@ export default function SideCart({ id, name, imageUrl, price, amount }) {
       type : "PRODUCT"
     }));
   };
+
   return (
     <div className='grid grid-cols-5 px-3 my-3 gap-x-3'>
       <div className=''>
@@ -39,7 +41,7 @@ export default function SideCart({ id, name, imageUrl, price, amount }) {
         </div>
       </div>
       <div className='col-span-3 space-y-3 '>
-        <p className={`${montserrat.className} font-extralight text-textGray text-sm tracking-wide`}>{ name }</p>
+        <p className={`${montserrat.className} font-medium text-textGray text-md tracking-wide`}>{ name }</p>
         <CartButton 
         ref={amountRef} 
         amount={amount}
@@ -48,7 +50,10 @@ export default function SideCart({ id, name, imageUrl, price, amount }) {
       </div>
       
       <div className='flex flex-col items-center justify-center space-y-3'>
-        <MdOutlineCancel className='text-2xl cursor-pointer text-textGray '/>
+        <LiaTimesCircle 
+        className='text-3xl cursor-pointer text-textGray'
+        onClick={()=>dispatch(clearedCart({ uid : data?.user?.uid, id : id }))}
+        />
         <p>${ (amount * price).toFixed(2) }</p>
       </div>
     </div>

@@ -1,6 +1,6 @@
 "use client"
 
-import React from 'react'
+import React, { useMemo } from 'react'
 import { oswald, montserrat } from '@/app/layout'
 import { LiaTimesSolid } from 'react-icons/lia'
 import { useDispatch, useSelector } from 'react-redux'
@@ -10,9 +10,18 @@ import { CgArrowTopRightR } from 'react-icons/cg'
 
 export default function CartModal() {
   const dispatch = useDispatch();
-  const carts = useSelector(state=>state.cart.cart);
+  const cartss = useSelector(state=>state.cart.cart);
+  const carts = useMemo(() => cartss, [cartss]);
+  const [ totalPrice, setTotalPrice ] = React.useState([])
+  const isLoading = useSelector(state=>state.cart.isLoading);
+  const error = useSelector(state=>state.cart.error);
   const cartModal = useSelector(state=>state.modal.cartIsToggled);
-  console.log(cartModal);
+  React.useEffect(()=>{
+    setTotalPrice(
+      carts?.reduce((total, item)=>total + (item.amount * item.price), 0)
+    )
+  }, [carts])
+
   return (
     <>
       {
@@ -32,7 +41,7 @@ export default function CartModal() {
             className="text-xl font-semibold cursor-pointer"/>
           </div>
           {
-            !carts && carts.length === 0 &&
+            carts.length === 0 &&
             <div className="justify-center flex items-center h-[40rem]">
             <p className={`${montserrat.className} text-textGray text-sm tracking-wide`}>No products in cart</p>
           </div>
@@ -41,7 +50,14 @@ export default function CartModal() {
           {
             carts && carts.length > 0 && (
               <>
-                <div className='w-full overflow-auto h-96'>
+                <div className='w-full overflow-auto h-[32rem] relative'>
+                { 
+                  isLoading && (
+                    <div className='fixed bg-textGray h-full w-full flex items-center justify-center bg-opacity-25 '>
+                      <img src="/spinner.svg"></img>
+                    </div>
+                  )
+                }
                   {
                     carts.map(cart=>(
                       <SideCart 
@@ -58,8 +74,21 @@ export default function CartModal() {
               </>
             )
           }
-          <div className='absolute w-full px-4 bottom-4'>
-            <button className='w-full px-4 py-3 font-semibold text-white uppercase bg-darkOrange rounded-3xl'>Continue Shopping</button>
+          <div className={`absolute w-full px-4 bottom-4 ${montserrat.className}`}>
+            {
+              carts.length === 0 ? (
+                <button className='w-full px-4 py-3 font-semibold text-white uppercase bg-darkOrange rounded-3xl'>Continue Shopping</button>
+              ) : (
+                <div className='flex flex-col space-y-3 text-textGray text-light'>
+                  <div className='border-t border-b py-3 flex justify-between items-center'>
+                    <p>Subtotal</p>
+                    <p>${ totalPrice.toFixed(2) }</p>
+                  </div>
+                  <button className='w-full px-4 py-3 font-semibold text-white uppercase bg-darkOrange rounded-3xl'>VIEW CART</button>
+                  <button className='w-full px-4 py-3 font-semibold text-white uppercase bg-darkOrange rounded-3xl'>CHECKOUT</button>
+                </div>
+              )
+            }
           </div>
         </div>
         )

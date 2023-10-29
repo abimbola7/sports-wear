@@ -27,9 +27,8 @@ const cartSlice = createSlice({
       }
       console.log(state.cart)
     },
-    removeFromCart(state, action) {},
     clearCart (state, action) {
-
+      state.cart = state.cart.filter(item=>item.id !== action.payload)
     },
     setCart(state, action) {
       state.cart = action.payload
@@ -57,16 +56,41 @@ const cartSlice = createSlice({
 
 export const fetchCart = createAsyncThunk(
   "content/fetchCart",
-  async (dat, {dispatch, getState }) => {
-    const { uid, item, type } = dat
-    console.log(type)
-    dispatch(cartAction.addToCart({item, type}));
-    const carts = getState().cart.cart;
-    // console.log(carts);
-    const db = getFirestore();
-    const collectionRef = doc(db, 'carts', dat.uid);
-    console.log(collectionRef)
-    await setDoc(collectionRef, { cart: carts }, { merge: true })
+  async (dat, {dispatch, getState, rejectWithValue }) => {
+    const previousCart = getState().cart.cart;
+    try {
+      const { uid, item, type } = dat
+      console.log(previousCart)
+      dispatch(cartAction.addToCart({item, type}));
+      const carts = getState().cart.cart;
+      console.log(carts);
+      const db = getFirestore();
+      const collectionRef = doc(db, 'carts', dat.uid);
+      console.log(collectionRef)
+      await setDoc(collectionRef, { cart: carts }, { merge: true })
+    } catch (error) {
+      dispatch(cartAction.setCart(previousCart))
+      return rejectWithValue({ message : "Failed to update cart" })
+    }
+  }
+);
+
+
+export const clearedCart = createAsyncThunk(
+  "content/fetchCart",
+  async (data, {dispatch, getState, rejectWithValue }) => {
+    try {
+      const { uid, id } = data;
+      dispatch(cartAction.clearCart(id));
+      const carts = getState().cart.cart
+      console.log(carts)
+      const db = getFirestore();
+      const collectionRef = doc(db, 'carts', uid);
+      console.log(collectionRef)
+      await setDoc(collectionRef, { cart: carts }, { merge: true })
+    } catch (error) {
+      return rejectWithValue({ message : "Failed to update cart" })
+    }
   }
 );
 

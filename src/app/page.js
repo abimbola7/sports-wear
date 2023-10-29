@@ -31,7 +31,7 @@ export default function Home() {
 
   return (
     <>
-      <CartModal />
+      {/* <CartModal /> */}
       <Hero />
       <Category/>
       <Trending />

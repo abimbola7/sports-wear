@@ -13,28 +13,30 @@ const CartButton = React.forwardRef(
         return;
       }
       ref.current.value--
+      props.add();
     }
+    
     const cartAdd = () => {
       ref.current.value++
-      props.add()
+      props.add();
     }
     return (
-              <div className="flex justify-between items-center bg-lightGrayishBlue w-[100px] px-3 text-lg border border-[#a6a5ad] font-extralight">
+              <div className="flex justify-between items-center bg-lightGrayishBlue w-[120px] text-lg border border-[#a6a5ad] font-extralight">
                   <button
                   onClick={cartSubstract}
-                  className="hover:text-opacity-60"
+                  className="hover:text-opacity-60 w-full flex justify-center"
                   >
                     <AiOutlineMinus />
                   </button>
                   <input 
                   ref={ref}
                   type="number" 
-                  className="w-12 text-center text-black focus:outline-none bg-grey-500 border-l border-r border-[#8B8A93] pl-3 text-md" 
+                  className="w-14 text-center text-black focus:outline-none bg-grey-500 border-l border-r border-[#8B8A93] pl-3 text-md py-1" 
                   defaultValue={props.amount} 
                   disabled/>
                   <button
                   onClick={cartAdd}
-                  className={`hover:text-opacity-60 w-full`}
+                  className={`hover:text-opacity-60 w-full flex justify-center`}
                   >
                     <AiOutlinePlus />
                   </button>

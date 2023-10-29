@@ -9,10 +9,12 @@ import Link from 'next/link';
 import { montserrat, oswald } from '@/app/layout';
 import CartBtn from '@/components/cart-btn';
 import { fetchCart } from '@/store/cartSlice';
+import CartModal from '@/components/cartmodal';
 
 export default function ProductItem({ params }) {
   const { data } = useSession();
   const dispatch = useDispatch();
+  const isLoading = useSelector(state=>state.cart.isLoading);
   const product = useSelector(state=>state.product.product);
   const loading = useSelector(state=>state.product.isLoading);
   const error = useSelector(state=>state.product.error);
@@ -38,6 +40,7 @@ export default function ProductItem({ params }) {
 
   return (
     <>
+      {/* <CartModal /> */}
       {
         loading && !error && Object.keys(product).length === 0 && (
           <div className='flex items-center justify-center w-full min-h-screen'>
@@ -106,8 +109,14 @@ export default function ProductItem({ params }) {
                       ref={amountRef}
                        />
                       <button
+                      disabled={isLoading}
                       onClick={addToCart}
-                       className="uppercase font-semibold flex-1 py-2 tracking-wider text-sm bg-darkOrange rounded-3xl text-[#F7F7F7] px-3 mt-3">Add to Cart</button>
+                       className={`uppercase font-semibold flex-1 py-2 tracking-wider text-sm bg-darkOrange ${isLoading && 'bg-opacity-25'} rounded-3xl text-[#F7F7F7] px-3 mt-3 sm:mt-0 flex items-center justify-center`}>
+                       Add to Cart
+                       {
+                        isLoading && <img src='/infinity.svg' className='!ml-3 w-6'/>
+                       }
+                       </button>
                     </div>
                     <div className="flex flex-col pt-2 text-sm border-t sm:flex-row sm:space-x-3 sm:items-center">
                       <div className="">Category: {" "} <span>{ product?.category?.join(', ') }</span></div>
