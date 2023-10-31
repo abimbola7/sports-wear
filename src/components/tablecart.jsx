@@ -10,8 +10,8 @@ import CartRow from './cartrow';
 
 export default function TableCart({ cart }) {
   return (    
-    <div className="relative overflow-x-auto shadow-md">
-        <table className="w-full text-left text-gray-500 dark:text-gray-400 text-sm">
+    <div className="relative hidden overflow-x-auto shadow-md md:block">
+        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead className={`text-gray-700 ${montserrat.className} text-md border  bg-[#F7F7F7]`}>
                 <tr>
                     <th scope="col" className="px-6 py-3">

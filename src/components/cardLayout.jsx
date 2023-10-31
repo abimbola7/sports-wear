@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { montserrat, oswald } from '@/app/layout';
 import TableCart from './tablecart';
 import CartLoading from './loading';
+import ColCart from './colcart';
 
 export default function CardLayout() {
   const cartData = useSelector(state=>state.cart.cart);
@@ -17,16 +18,16 @@ export default function CardLayout() {
     )
   }, [cart])
   return (
-    <div className='pt-16 min-h-screen bg-[#f7f7f7] hidden md:block px-6'>
+    <div className='pt-16 min-h-screen bg-[#f7f7f7] px-6'>
       <div className="max-w-[87rem] lg:mx-auto bg-white pt-20 px-5 lg:px-24 mx-5 min-h-screen">
         <h1 className={`${oswald.className} text-3xl font-medium`}>Cart</h1>
         {
           cart.length > 0 && (
-            <div className='grid grid-cols-3 mt-4 gap-x-4'>
-              <div className='col-span-2'>
-              {isLoading ? <CartLoading /> : <TableCart cart={cart} />}
+            <div className='grid grid-cols-1 mt-4 md:grid-cols-3 gap-x-4'>
+              <div className='md:col-span-2'>
+                {isLoading ? <CartLoading /> : <><TableCart cart={cart} /> <ColCart cart={cart} /></>}
               </div>
-              <div className={`border ${isLoading && 'p-4'}`}>
+              <div className={`border ${isLoading && 'p-4'} mt-14 md:mt-0`}>
                 {
                   isLoading ? (
                       <div className='flex flex-col w-full space-y-4 animate-pulse'>
