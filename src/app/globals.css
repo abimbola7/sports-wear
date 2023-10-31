@@ -16,6 +16,10 @@
   .icon {
     @apply  text-2xl transition-transform hover:scale-125 duration-150 ease-out cursor-pointer;
   }
+  .btn {
+    @apply w-full px-4 py-3 font-semibold text-white uppercase bg-darkOrange rounded-3xl
+
+  }
 }
 
 body {

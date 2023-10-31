@@ -32,7 +32,7 @@ const CartButton = React.forwardRef(
                   ref={ref}
                   type="number" 
                   className="w-14 text-center text-black focus:outline-none bg-grey-500 border-l border-r border-[#8B8A93] pl-3 text-md py-1" 
-                  defaultValue={props.amount} 
+                  value={props.amount} 
                   disabled/>
                   <button
                   onClick={cartAdd}

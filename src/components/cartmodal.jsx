@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { modalActions } from '@/store/modalSlice'
 import SideCart from './sidecart'
 import { CgArrowTopRightR } from 'react-icons/cg'
+import Link from 'next/link'
 
 export default function CartModal() {
   const dispatch = useDispatch();
@@ -77,15 +78,19 @@ export default function CartModal() {
           <div className={`absolute w-full px-4 bottom-4 ${montserrat.className}`}>
             {
               carts.length === 0 ? (
-                <button className='w-full px-4 py-3 font-semibold text-white uppercase bg-darkOrange rounded-3xl'>Continue Shopping</button>
+                <button className='btn'>Continue Shopping</button>
               ) : (
                 <div className='flex flex-col space-y-3 text-textGray text-light'>
                   <div className='border-t border-b py-3 flex justify-between items-center'>
-                    <p>Subtotal</p>
+                    <p>Subtotal:</p>
                     <p>${ totalPrice.toFixed(2) }</p>
                   </div>
-                  <button className='w-full px-4 py-3 font-semibold text-white uppercase bg-darkOrange rounded-3xl'>VIEW CART</button>
-                  <button className='w-full px-4 py-3 font-semibold text-white uppercase bg-darkOrange rounded-3xl'>CHECKOUT</button>
+                  <Link href="/cart" onClick={()=>dispatch(modalActions.toggleCart())}>
+                    <button className='btn'>VIEW CART</button>
+                  </Link>
+                  <Link href="/checkout">
+                    <button className='btn'>CHECKOUT</button>
+                  </Link>
                 </div>
               )
             }
