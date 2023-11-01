@@ -9,7 +9,6 @@ import CartButton from './cartBtn1'
 
 export default function ColItem({ items }) {
   const amountRef = React.useRef()
-  console.log(items)
   const { data } = useSession();
   const dispatch = useDispatch();
 
@@ -28,10 +27,10 @@ export default function ColItem({ items }) {
   };
   return (
     <div className={`${montserrat.className}`}>
-      <div className="flex items-center justify-end py-3 border-b">
+      <div className="flex items-center justify-end py-3 border-b px-3 ">
         <LiaTimesCircle
           className='text-3xl cursor-pointer text-textGray'                  
-          onClick={()=>dispatch(clearedCart({ uid : data?.user?.uid, id : items.id }))}
+          onClick={()=>dispatch(clearedCart({ uid : data?.user?.uid, id : items.id, name : items.name }))}
         />
       </div>
       <div className="py-3 flex items-center justify-center border-b">
@@ -43,23 +42,23 @@ export default function ColItem({ items }) {
           className=""
         />
       </div>
-      <div className="py-3 flex items-center px-3 justify-between border-b">
-        <p className='font-semibold text-md'>Product:</p>
+      <div className="py-3 flex items-center px-3 justify-between border-b text-sm sm:text-md space-x-2">
+        <p className='font-semibold'>Product:</p>
         <p>{items.name}</p>
       </div>
-      <div className="py-3 flex items-center px-3 justify-between border-b">
-        <p className='font-semibold text-md'>Price:</p>
+      <div className="py-3 flex items-center px-3 justify-between border-b text-sm sm:text-md space-x-2">
+        <p className='font-semibold'>Price:</p>
         <p>${items.price.toFixed(2)}</p>
       </div>
-      <div className="py-3 flex items-center px-3 justify-between border-b overflow-auto">
-        <p className='font-semibold text-md'>Quantity:</p>
+      <div className="py-3 flex items-center px-3 justify-between border-b overflow-auto text-sm sm:text-md space-x-2">
+        <p className='font-semibold'>Quantity:</p>
         <CartButton 
           ref={amountRef} 
           amount={items.amount}
           add={addToCart}/>
       </div>
-      <div className="py-3 flex items-center px-3 justify-between">
-        <p className='font-semibold text-md'>Subtotal:</p>
+      <div className="py-3 flex items-center px-3 justify-between text-sm sm:text-md space-x-2">
+        <p className='font-semibold'>Subtotal:</p>
         <p>${(items.price * items.amount).toFixed(2)}</p>
       </div>
     </div>

@@ -4,7 +4,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import modalSlice from "./modalSlice";
 import cartSlice from "./cartSlice";
 import productSlice from "./productSlice";
-import contentSlice from "./contentSlice";
+import uiSlice from "./uiSlice";
 import productsSlice from "./productsSlice";
 
 const store  = configureStore({
@@ -12,7 +12,8 @@ const store  = configureStore({
     modal : modalSlice,
     cart : cartSlice,
     product : productSlice,
-    products: productsSlice
+    products: productsSlice,
+    ui : uiSlice
   }
 })
 

@@ -83,7 +83,7 @@ export default function CartModal() {
                 <div className='flex flex-col space-y-3 text-textGray text-light'>
                   <div className='border-t border-b py-3 flex justify-between items-center'>
                     <p>Subtotal:</p>
-                    <p>${ totalPrice.toFixed(2) }</p>
+                    <p>${ totalPrice?.toFixed(2) }</p>
                   </div>
                   <Link href="/cart" onClick={()=>dispatch(modalActions.toggleCart())}>
                     <button className='btn'>VIEW CART</button>

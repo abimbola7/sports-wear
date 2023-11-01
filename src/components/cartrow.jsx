@@ -13,7 +13,6 @@ export default function CartRow({ items }) {
   const dispatch = useDispatch()
   const amountRef = React.useRef();
   const { data } = useSession()
-  console.log(isLoading)
   const addToCart = () => {
     dispatch(fetchCart({
       uid:data?.user?.uid, 
@@ -59,7 +58,7 @@ export default function CartRow({ items }) {
                             <p>${(items.price * items.amount).toFixed(2)}</p>
                             <LiaTimesCircle 
                             className='text-3xl cursor-pointer text-textGray'
-                            onClick={()=>dispatch(clearedCart({ uid : data?.user?.uid, id : items.id }))}
+                            onClick={()=>dispatch(clearedCart({ uid : data?.user?.uid, id : items.id, name : items.name }))}
                             />
                         </td>
                     </tr>
