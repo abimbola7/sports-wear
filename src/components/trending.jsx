@@ -1,6 +1,7 @@
 import React from 'react'
 import { oswald } from '@/app/layout'
 import Image from 'next/image'
+import Link from 'next/link'
 
 
 export default function Trending() {
@@ -10,7 +11,9 @@ export default function Trending() {
         <div className="py-5 md:pl-6">
           <h1 className={`text-5xl font-semibold leading-relaxed`}>Trending Sports Wear for</h1>
         </div>
-        <div className="">
+        <Link
+        href={`/products/men`}
+         className="">
           <Image
             src={"https://firebasestorage.googleapis.com/v0/b/sport-wear-store.appspot.com/o/sports-wear-store-more-category-img-1.jpg?alt=media&token=3d0192d3-e663-443b-9db6-352ea7e37a5a"}
             alt={"alt"}
@@ -19,8 +22,10 @@ export default function Trending() {
             height={200}
           />
           <p className='my-6 text-xl md:text-3xl font-semibold'>MEN</p>
-        </div>
-        <div className="">
+        </Link>
+        <Link
+        href={`/products/women`}
+         className="">
           <p className='my-6 text-xl md:text-3xl font-semibold'>WOMEN</p>
           <Image
               src={"https://firebasestorage.googleapis.com/v0/b/sport-wear-store.appspot.com/o/sports-wear-store-more-category-img-2.jpg?alt=media&token=3d0192d3-e663-443b-9db6-352ea7e37a5a"}
@@ -29,7 +34,7 @@ export default function Trending() {
               width={300}
               height={200}
             />
-        </div>
+        </Link>
       </div>
     </section>
   )

@@ -9,21 +9,8 @@ import { useSession } from 'next-auth/react';
 
 
 export default function Collection() {
-  const { data } = useSession();
   const dispatch = useDispatch();
   const cart = useSelector(state=>state.cart.cart);
-  const addToCart = () => {
-    dispatch(cartAction.addToCart({
-      name : "bimboola",
-      type : "refuse to say",
-      age : 23
-    }))
-    // dispatch(contentAction.add())
-    // console.log(await cart);
-  }
-
-
-
 
   return (
     <section>
@@ -33,7 +20,6 @@ export default function Collection() {
             SPARTA
             <span className='text-darkOrange'>X</span>
           </h2>
-          <button onClick={addToCart}>Click here</button>
           <div className="text-white text-center md:text-left">
             <h1 className={`text-4xl ${oswald.className}`}>Adventure Ready</h1>   
             <p className="mt-10">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo obcaecati error maiores</p>
@@ -42,7 +28,7 @@ export default function Collection() {
             SHOP COLLECTION
           </button>
         </div>
-        <div className="py-10 lg:py-16 lg:col-span-2 lg:pr-14 grid grid-cols-2">
+        <div className="py-10 lg:py-16 lg:col-span-2 lg:pr-14 grid grid-cols-2 justify-items-center ">
             <Image
             src={"https://firebasestorage.googleapis.com/v0/b/sport-wear-store.appspot.com/o/sports-wear-store-collection-img-1.jpg?alt=media&token=01d42056-4462-4dd3-b9f9-b21cbe5a1a2b"}
             alt={"alt"}

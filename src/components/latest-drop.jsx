@@ -3,34 +3,23 @@ import Link from 'next/link'
 import React from 'react'
 import { BsArrowRight } from "react-icons/bs"
 import { oswald, montserrat } from '@/app/layout'
-import { collection, getDocs, query, where } from 'firebase/firestore'
-import { useDispatch } from 'react-redux'
-import { modalActions } from '@/store/modalSlice'
-import { db } from '../../firebase'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchLatest } from '@/store/productsSlice'
 import Card from './card'
 
 export default function LatestDrop() {
-  const [ isLoading, setIsLoading ] = React.useState(false);
-  const [ latestProducts, setLatestProducts ] = React.useState([]);
+  const latest = useSelector(state=>state.products.latest);
+  const isLoading  = useSelector(state=>state.products.isLoading);
+  const error  = useSelector(state=>state.products.error);
+  console.log(isLoading)
   const dispatch = useDispatch();
 
-  React.useEffect(()=> {
-    const fetchLatestData  = async () => {
-      setIsLoading(true)
-      const q = query(collection(db, "products"), where("latest", "==", true));
-      await getDocs(q)
-      .then(querySnaphot => {
-        const newData = querySnaphot.docs.map(doc=>(
-          {
-            ...doc.data(), id:doc.id
-          }
-        ))
-        setLatestProducts(newData);
-        setIsLoading(false);
-      })
-    }
-    fetchLatestData();
-  }, [])
+  React.useEffect(() => {
+    console.log("ee")
+    dispatch(fetchLatest("dd"));
+  }, [dispatch]);
+  
+
 
   return (
     <section className='px-4'>
@@ -54,7 +43,7 @@ export default function LatestDrop() {
           ) : (
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-items-center">
               {
-                latestProducts && latestProducts.map(latest=>(
+                latest.length > 0 && latest.map(latest=>(
                   <Card 
                   key={latest.id}
                   id={latest.id}
@@ -67,6 +56,18 @@ export default function LatestDrop() {
               }
             </div>
           )
+        }
+        {
+        !isLoading && error && (
+        <div className={`${montserrat.className} text-center w-full`}>
+          {error} 
+          <button 
+          onClick={()=>dispatch(fetchLatest())}
+          className={`bg-darkOrange px-4 py-2 rounded-3xl text-white ml-3 ${montserrat.className}`}>
+            Try again
+          </button>
+        </div>
+        )
         }
       </div>
     </section>

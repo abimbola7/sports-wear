@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function CartLoading() {
   return (
-    <div className='p-4 border animate-pulse'>
+    <div className='p-4 border animate-pulse cursor-wait'>
       <div className="w-full h-6 bg-gray-500 rounded-sm"></div>
       <div className="grid w-full grid-cols-6 mt-6 gap-x-5">
         <div className="bg-gray-500 border"></div>

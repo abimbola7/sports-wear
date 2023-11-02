@@ -9,7 +9,7 @@ const Banner = () => {
   return (
     <section>
       <div
-      className='w-[90%] h-[350px] lg:h-[450px] banner mx-auto py-16 px-16 mb-4'
+      className='w-[90%] h-[400px] lg:h-[450px] banner mx-auto py-16 px-16 mb-4'
       >
         <h2 className={`text-3xl font-bold text-white ${montserrat.className}`}>
           SPARTA

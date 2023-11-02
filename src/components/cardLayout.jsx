@@ -14,7 +14,6 @@ export default function CardLayout() {
   const cart = React.useMemo(()=>cartData, [cartData]);
   const [ totalPrice, setTotalPrice ] = React.useState(0)
   const [loading, setLoading] = React.useState(false);
-  console.log(cart.length === 0)
   React.useEffect(()=>{
     setTotalPrice(
       cart?.reduce((total, item)=>total + (item.amount * item.price), 0)
@@ -34,7 +33,7 @@ export default function CardLayout() {
               <div className={`border ${isLoading && 'p-4'} mt-14 md:mt-0`}>
                 {
                   isLoading ? (
-                      <div className='flex flex-col w-full space-y-4 animate-pulse'>
+                      <div className='flex flex-col w-full space-y-4 animate-pulse cursor-wait'>
                         <div className='w-full h-10 bg-gray-500 rounded-sm'></div>
                         <div className='w-full h-4 bg-gray-500 rounded-sm'></div>
                         <div className='w-full h-4 bg-gray-500 rounded-sm'></div>
