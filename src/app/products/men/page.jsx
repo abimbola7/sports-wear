@@ -10,32 +10,34 @@ import { VscSettings } from 'react-icons/vsc';
 import { db } from '../../../../firebase';
 import { montserrat, oswald } from '@/app/layout';
 import { usePathname } from 'next/navigation';
+import { useFetchType } from '@/hooks/api';
 
 export default function Men(params) {
   const pathname = usePathname();
-  console.log(pathname)
+  const { isLoading, error, products } = useFetchType("Men")
+  console.log(isLoading, error, products);
   const [ layout, setLayout ] = React.useState('grid');
-  const [ isLoading, setIsLoading  ] = React.useState(false);
-  const [ products, setProducts ] = React.useState([])
+  // const [ isLoading, setIsLoading  ] = React.useState(false);
+  // const [ products, setProducts ] = React.useState([])
 
-  React.useEffect(()=> {
-    const fetchData  = async () => {
-      setIsLoading(true)
-      const q = query(collection(db, "products"), where('category', 'array-contains', 'Men'));
-      await getDocs(q)
-      .then(querySnaphot => {
-        const newData = querySnaphot.docs.map(doc=>(
-          {
-            ...doc.data(), id:doc.id
-          }
-        ))
-        console.log(newData)
-        setProducts(newData);
-        setIsLoading(false);
-      })
-    }
-    fetchData();
-  }, [])
+  // React.useEffect(()=> {
+  //   const fetchData  = async () => {
+  //     setIsLoading(true)
+  //     const q = query(collection(db, "products"), where('category', 'array-contains', 'Men'));
+  //     await getDocs(q)
+  //     .then(querySnaphot => {
+  //       const newData = querySnaphot.docs.map(doc=>(
+  //         {
+  //           ...doc.data(), id:doc.id
+  //         }
+  //       ))
+  //       console.log(newData)
+  //       setProducts(newData);
+  //       setIsLoading(false);
+  //     })
+  //   }
+  //   fetchData();
+  // }, [])
 
   return (
     <main
@@ -52,7 +54,7 @@ export default function Men(params) {
         <VscSettings className='text-xl rotate-90'/>
         <span className='ml-2'>Filter</span>
       </p>
-      <div className='flex space-x-3 items-center'>
+      <div className='flex items-center space-x-3'>
         <HiViewGrid 
         onClick={()=>setLayout('grid')}
         className={`text-3xl transition-transform hover:scale-110 duration-200 ease-out cursor-pointer ${ layout === "grid" && 'text-darkOrange'}`}/>
@@ -72,7 +74,7 @@ export default function Men(params) {
               <>
                 {
                   layout === "grid" ? (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-items-center">
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-items-center">
                       {
                         products && products.map(latest=>(
                           <Card 
@@ -86,7 +88,7 @@ export default function Men(params) {
                       }
                     </div>
                   ) : (
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 justify-items-center">
+                    <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 justify-items-center">
                       {
                         products && products.map(latest=>(
                           <RowCard 

@@ -10,6 +10,7 @@ import { montserrat, oswald } from '@/app/layout';
 import CartBtn from '@/components/cart-btn';
 import { fetchCart } from '@/store/cartSlice';
 import CartModal from '@/components/cartmodal';
+import ErrorComp from '@/components/error';
 
 export default function ProductItem({ params }) {
   const { data } = useSession();
@@ -18,6 +19,7 @@ export default function ProductItem({ params }) {
   const product = useSelector(state=>state.product.product);
   const loading = useSelector(state=>state.product.isLoading);
   const error = useSelector(state=>state.product.error);
+  console.log(error);
   const amountRef = useRef();
 
   React.useEffect(()=>{
@@ -42,14 +44,26 @@ export default function ProductItem({ params }) {
     <>
       <div className='min-h-screen bg-[#F7F7F7] pt-16'>
         {
-          loading && !error && Object.keys(product).length === 0 && (
+          !loading && error && (
+            <div className={`${montserrat.className} text-center w-full`}>
+              {error === "Rejected" && "Something went wrong"} 
+              <button 
+                onClick={()=>dispatch(fetchProduct(params.id))}
+                className={`bg-darkOrange px-4 py-2 rounded-3xl text-white ml-3 ${montserrat.className}`}>
+                  Try again
+              </button>
+            </div>
+          ) 
+        }
+        {
+          loading && !error && !product && (
             <div className='flex items-center justify-center w-full min-h-screen'>
               <img src="/spinner.svg"/>
             </div>
           )
         }
         {
-          !loading && !error && Object.keys(product).length !== 0 && (
+          !loading && !error && product && (
             <div className="max-w-[87rem] lg:mx-auto bg-white px-5 md:px-24 mx-5">
               <div className='grid w-full grid-cols-1 py-8 md:py-32 md:grid-cols-2 md:gap-x-10 gap-y-8 md:gap-y-0'>
                   <div className="">

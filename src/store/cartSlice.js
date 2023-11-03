@@ -107,16 +107,21 @@ export const clearedCart = createAsyncThunk(
 export const fetchShoeData = (data) => {
         return async (dispatch) => {
             const fetchData = async () => {
-              if (data) {
-                const q = doc(db, "carts", data?.user?.uid);
-                const querySnapShot = await getDoc(q)
-                if (querySnapShot.exists()){
-                  dispatch(cartAction.setCart(querySnapShot?.data().cart))
-                } else {
-                  await setDoc(q, {
-                    cart : []
-                  })
-                }
+              try {
+                  if (data) {
+                    const q = doc(db, "carts", data?.user?.uid);
+                    const querySnapShot = await getDoc(q)
+                    if (querySnapShot.exists()){
+                      dispatch(cartAction.setCart(querySnapShot?.data().cart))
+                    } else {
+                      await setDoc(q, {
+                        cart : []
+                      })
+                    }
+                  }
+              } catch (error) {
+                console.log(error)
+                throw new Error(error.message)
               }
             }
             fetchData()

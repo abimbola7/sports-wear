@@ -7,33 +7,13 @@ import React from 'react'
 import { FaThList } from 'react-icons/fa';
 import { HiViewGrid } from 'react-icons/hi';
 import { VscSettings } from 'react-icons/vsc';
-import { db } from '../../../../firebase';
+import { useFetchType } from '@/hooks/api';
 import { montserrat, oswald } from '@/app/layout';
+
 
 export default function Women(params) {
   const [ layout, setLayout ] = React.useState('grid');
-  const [ isLoading, setIsLoading  ] = React.useState(false);
-  const [ products, setProducts ] = React.useState([])
-
-  React.useEffect(()=> {
-    const fetchData  = async () => {
-      setIsLoading(true)
-      const q = query(collection(db, "products"), where('category', 'array-contains', 'Women'));
-      await getDocs(q)
-      .then(querySnaphot => {
-        const newData = querySnaphot.docs.map(doc=>(
-          {
-            ...doc.data(), id:doc.id
-          }
-        ))
-        console.log(newData)
-        setProducts(newData);
-        setIsLoading(false);
-      })
-    }
-    fetchData();
-  }, [])
-
+  const { products, isLoading, error } = useFetchType("Women")
   return (
     <main
     className='min-h-screen mt-24 max-w-[92rem] mx-auto text-customBlack px-5 '
@@ -49,7 +29,7 @@ export default function Women(params) {
         <VscSettings className='text-xl rotate-90'/>
         <span className='ml-2'>Filter</span>
       </p>
-      <div className='flex space-x-3 items-center'>
+      <div className='flex items-center space-x-3'>
         <HiViewGrid 
         onClick={()=>setLayout('grid')}
         className={`text-3xl transition-transform hover:scale-110 duration-200 ease-out cursor-pointer ${ layout === "grid" && 'text-darkOrange'}`}/>
@@ -69,7 +49,7 @@ export default function Women(params) {
               <>
                 {
                   layout === "grid" ? (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-items-center">
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-items-center">
                       {
                         products && products.map(latest=>(
                           <Card 
@@ -83,7 +63,7 @@ export default function Women(params) {
                       }
                     </div>
                   ) : (
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 justify-items-center">
+                    <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 justify-items-center">
                       {
                         products && products.map(latest=>(
                           <RowCard 

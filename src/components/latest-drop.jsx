@@ -6,6 +6,7 @@ import { oswald, montserrat } from '@/app/layout'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchLatest } from '@/store/productsSlice'
 import Card from './card'
+import ErrorComp from './error'
 
 export default function LatestDrop() {
   const latest = useSelector(state=>state.products.latest);
@@ -59,14 +60,7 @@ export default function LatestDrop() {
         }
         {
         !isLoading && error && (
-        <div className={`${montserrat.className} text-center w-full`}>
-          {error} 
-          <button 
-          onClick={()=>dispatch(fetchLatest())}
-          className={`bg-darkOrange px-4 py-2 rounded-3xl text-white ml-3 ${montserrat.className}`}>
-            Try again
-          </button>
-        </div>
+        <ErrorComp error={error} />
         )
         }
       </div>

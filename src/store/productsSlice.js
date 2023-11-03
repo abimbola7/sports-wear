@@ -5,6 +5,8 @@ import { db } from "../../firebase";
 const initialProductsState = {
   products : [],
   latest : [],
+  men : [],
+  women : [],
   isLoading : false,
   error : null
 }

@@ -3,7 +3,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 
 const initialProductState = {
-  product : {},
+  product : null,
   isLoading : false,
   error : null
 }
@@ -16,6 +16,7 @@ const productSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchProduct.pending, (state, action) => {
       state.isLoading = true;
+      state.error = null;
     });
     builder.addCase(fetchProduct.fulfilled, (state, action) => {
       state.isLoading = false;
@@ -32,11 +33,15 @@ const productSlice = createSlice({
 
 export const fetchProduct = createAsyncThunk(
   'product/fetchProduct',
-  async (id, { dispatch, getState }) => {
-    const eventRef = doc(db, 'products', id);
-    const querySnapshot = await getDoc(eventRef)
-    console.log(querySnapshot.id)
-    return {...querySnapshot.data(), id: querySnapshot.id}
+  async (id, { dispatch, getState, rejectWithValue }) => {
+    try {
+      const eventRef = doc(db, 'products', id);
+      const querySnapshot = await getDoc(eventRef)
+      console.log(querySnapshot.id)
+      return {...querySnapshot.data(), id: querySnapshot.id} 
+    } catch (error) {
+      return rejectWithValue({ message : "Something went wrong" })
+    }
   }
 )
 
