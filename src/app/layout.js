@@ -9,12 +9,14 @@ import CartModal from '@/components/cartmodal'
 const inter = Inter({ subsets: ['latin'] })
 export const oswald = Oswald({
   subsets: ["latin"],
-  weight: ['200', '300', '400', '500', '600', '700']
+  weight: ['200', '300', '400', '500', '600', '700'],
+  display: 'swap'
 });
 
 export const montserrat = Montserrat({
   subsets : ['latin'],
-  weight: ['200', '300', '400', '500', '600', '700']
+  weight: ['200', '300', '400', '500', '600', '700'],
+  display: 'swap'
 })    
 
 

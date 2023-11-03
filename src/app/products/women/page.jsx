@@ -13,7 +13,7 @@ import { montserrat, oswald } from '@/app/layout';
 
 export default function Women(params) {
   const [ layout, setLayout ] = React.useState('grid');
-  const { products, isLoading, error } = useFetchType("Women")
+  const { products, isLoading, error, memoizedFetchData } = useFetchType("Women")
   return (
     <main
     className='min-h-screen mt-24 max-w-[92rem] mx-auto text-customBlack px-5 '
@@ -39,13 +39,28 @@ export default function Women(params) {
       </div>
     </div>
     {
-          isLoading ? (
+          isLoading && !error && !products && (
             <div className='flex justify-center'>
               <img 
               src="/spinner.svg" 
               alt="" className='h-20'/>
             </div>
-          ) : (
+          ) 
+    }
+    {
+          !isLoading && error && (
+            <div className={`${montserrat.className} text-center w-full`}>
+              Something went wrong
+              <button 
+                onClick={()=>memoizedFetchData()}
+                className={`bg-darkOrange px-4 py-2 rounded-3xl text-white ml-3 ${montserrat.className}`}>
+                  Try again
+              </button>
+            </div>
+          ) 
+    }
+    {
+      !isLoading && !error && products &&(
               <>
                 {
                   layout === "grid" ? (

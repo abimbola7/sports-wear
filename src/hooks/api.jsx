@@ -7,23 +7,32 @@ export const useFetchType = (data) => {
   const [isLoading, setIsLoading] = React.useState(true)
   const [error, setError] = React.useState(null)
   const [products, setProducts] = React.useState(null)
-  React.useEffect(()=> {
-    const fetchData  = async () => {
-      setIsLoading(true)
+  const fetchData  = async () => {
+    setError(null)
+    setIsLoading(true)
+    try {
       const q = query(collection(db, "products"), where('category', 'array-contains', data));
-      await getDocs(q)
-      .then(querySnaphot => {
-        const newData = querySnaphot.docs.map(doc=>(
-          {
-            ...doc.data(), id:doc.id
-          }
-        ))
-        console.log(newData)
-        setProducts(newData);
-        setIsLoading(false);
-      })
+      const querySnaphot = await getDocs(q)
+      if (querySnaphot.empty) {
+        throw new Error("Something went wrong");
+      }
+      const newData = querySnaphot.docs.map(doc=>(
+        {
+          ...doc.data(), id:doc.id
+        }
+      ))
+      setProducts(newData);
+
+    } catch(error) {
+      setError("Something went wrong");
+    } finally {
+      setIsLoading(false)
     }
-    fetchData();
-  }, [data])
-  return { isLoading, products, error }
+  }
+  const memoizedFetchData = React.useCallback(fetchData, [data]);
+  
+  React.useEffect(()=> {
+    memoizedFetchData()
+  }, [memoizedFetchData])
+  return { isLoading, products, error, memoizedFetchData}
 }
