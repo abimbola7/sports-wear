@@ -1,21 +1,24 @@
 "use client"
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { modalActions } from "@/store/modalSlice";
 import { createPortal } from "react-dom";
-import { collection, doc, getDoc, getDocs, query } from "firebase/firestore";
+import { doc, getDoc, query} from "firebase/firestore";
 import { db } from "../../firebase";
 import Image from "next/image";
 import { oswald, montserrat } from "@/app/layout";
 import CartBtn from "./cart-btn";
 import { LiaTimesSolid } from "react-icons/lia";
+import { fetchCart } from "@/store/cartSlice";
+import { useSession } from "next-auth/react";
+import AddCart from "./addCart";
 
 export default function Modal({ id, setIds, amount}) {
+  const { data } = useSession();
   const dispatch = useDispatch();
-  const showModal = useSelector(state=>state.modal.isToggled);
+  const amountRef = React.useRef();
   const [ mounted, setMounted ] = React.useState(false);
   const [ productData, setProductData ] = React.useState(null);
-  // const { name, imageUrl, description, price, category, tags } = productData
   const [ isLoading, setIsLoading ] = React.useState(false);
 
   const closeModal = () => {
@@ -23,6 +26,20 @@ export default function Modal({ id, setIds, amount}) {
     setIds(null)
     dispatch(modalActions.toggleModal());
     document.body.style.overflow = 'auto';
+  };
+
+  const addToCart = () => {
+    dispatch(fetchCart({
+      uid:data?.user?.uid, 
+      item:{
+        id : productData.id,
+        name : productData.name,
+        price : productData.price,
+        imageUrl : productData.imageUrl,
+        amount : +amountRef.current.value
+      }, 
+      type : "PRODUCT"
+    }));
   };
 
   React.useEffect(() => setMounted(true), []);
@@ -34,7 +51,8 @@ export default function Modal({ id, setIds, amount}) {
         const eventRef = doc(db, 'products', id);
         await getDoc(eventRef)
         .then(querySnaphot => {
-          setProductData(querySnaphot.data())
+          console.log(querySnaphot.id)
+          setProductData({...querySnaphot.data(), id:querySnaphot.id})
           setIsLoading(false);
         }) 
       }
@@ -76,8 +94,11 @@ export default function Modal({ id, setIds, amount}) {
                   <p className="text-2xl font-bold text-textGray">${ productData.price.toFixed(2) }</p>
                   <p>{ productData.description }</p>
                   <div className="flex flex-col sm:flex-row sm:space-x-3 sm:items-center justify-start sm:!mt-5 max-w-sm pb-2 flex-wrap">
-                    <CartBtn amount={amount} />
-                    <button className="uppercase font-semibold flex-1 py-2 tracking-wider text-sm bg-darkOrange rounded-3xl text-[#F7F7F7] px-3 mt-3">Add to Cart</button>
+                  <CartBtn
+                  amount={productData?.amount}
+                  ref={amountRef}
+                  />
+                  <AddCart onAdd={addToCart}/>
                   </div>
                   <div className="flex flex-col pt-2 text-sm border-t sm:flex-row sm:space-x-3 sm:items-center">
                     <div className="">Category: {" "} <span>{ productData.category }</span></div>

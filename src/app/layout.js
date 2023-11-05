@@ -5,6 +5,7 @@ import Footer from '@/components/footer'
 import Providers from '@/store/provider'
 import NextAuthSessionProvider from './provider/sessionProvider'
 import CartModal from '@/components/cartmodal'
+import CartNotification from '@/components/cartnotification'
 
 const inter = Inter({ subsets: ['latin'] })
 export const oswald = Oswald({
@@ -34,6 +35,7 @@ export default function RootLayout({ children }) {
           <Providers
           >
             <Header/>
+            <CartNotification />
             {/* <Modal /> */}
             {children}
 

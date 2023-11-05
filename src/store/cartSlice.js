@@ -5,6 +5,7 @@ import { showNotification, hideNotification } from "./uiSlice";
 
 const initialCartState = {
   cart: [],
+  cartName : null,
   totalAmount : 0,
   isLoading : false,
   error : null
@@ -31,6 +32,9 @@ const cartSlice = createSlice({
     },
     setCart(state, action) {
       state.cart = action.payload
+    },
+    cartName(state, action) {
+      state.cartName = action.payload
     }
   },
   extraReducers: (builder) => {
@@ -62,13 +66,16 @@ export const fetchCart = createAsyncThunk(
       const db = getFirestore();
       const collectionRef = doc(db, 'carts', dat.uid);
       await setDoc(collectionRef, { cart: carts }, { merge: true })
+      dispatch(cartAction.cartName(item.name))
       dispatch(showNotification({
+        type : 'add',
         status : "success",
         message : "Cart Updated Successfully"
       }))
     } catch (error) {
       dispatch(cartAction.setCart(previousCart));
       dispatch(showNotification({
+        type : "error",
         status : "error",
         message : "Error Updating Cart, Try Again"
       }))
@@ -89,11 +96,13 @@ export const clearedCart = createAsyncThunk(
       const collectionRef = doc(db, 'carts', uid);
       await setDoc(collectionRef, { cart: carts }, { merge: true });
       dispatch(showNotification({
+        type : "delete",
         status : "success",
         message : `"${name}" removed.`
       }))
     } catch (error) {
       dispatch(showNotification({
+        type : "error",
         status : "error",
         message : `Could not update cart.`
       }))

@@ -17,6 +17,7 @@ export default function Card({ imageUrl, name, price, id, amount }) {
   const router = useRouter();
   const { data }  = useSession();
   const dispatch = useDispatch();
+  const isLoading = useSelector(state=>state.cart.isLoading);
   const [ ids, setIds ] = React.useState(null)
   const modal = useSelector(state=>state.modal.isToggled);
   let content;
@@ -43,6 +44,7 @@ export default function Card({ imageUrl, name, price, id, amount }) {
       <>
         { modal &&
           <Modal
+          imageUrl={imageUrl}
           amount={amount}
           name={name}
           price={price}
@@ -68,7 +70,10 @@ export default function Card({ imageUrl, name, price, id, amount }) {
             </div>
             <span 
             onClick={addToCart}
-            className="top-4 icons"><IoIosCart/></span>
+            className="top-4 icons">
+            <IoIosCart className={`${isLoading && "animate-spin pointer-events-none"}`}/>
+            </span>
+            
             <span 
             className="top-16 icons"
             onClick={openModal}

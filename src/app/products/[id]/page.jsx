@@ -11,6 +11,7 @@ import CartBtn from '@/components/cart-btn';
 import { fetchCart } from '@/store/cartSlice';
 import CartModal from '@/components/cartmodal';
 import ErrorComp from '@/components/error';
+import AddCart from '@/components/addCart';
 
 export default function ProductItem({ params }) {
   const { data } = useSession();
@@ -122,15 +123,7 @@ export default function ProductItem({ params }) {
                         amount={product?.amount}
                         ref={amountRef}
                         />
-                        <button
-                        disabled={isLoading}
-                        onClick={addToCart}
-                        className={`uppercase font-semibold flex-1 py-2 tracking-wider text-sm bg-darkOrange ${isLoading && 'bg-opacity-25'} rounded-3xl text-[#F7F7F7] px-3 mt-3 sm:mt-0 flex items-center justify-center`}>
-                        Add to Cart
-                        {
-                          isLoading && <img src='/infinity.svg' className='!ml-3 w-6'/>
-                        }
-                        </button>
+                        <AddCart onAdd={addToCart}/>
                       </div>
                       <div className="flex flex-col pt-2 text-sm border-t sm:flex-row sm:space-x-3 sm:items-center">
                         <div className="">Category: {" "} <span>{ product?.category?.join(', ') }</span></div>

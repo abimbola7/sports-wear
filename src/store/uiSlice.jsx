@@ -11,7 +11,8 @@ const uiSlice = createSlice({
     showNotification(state, action) {
       state.notification = {
         status : action.payload.status,
-        message : action.payload.message
+        message : action.payload.message,
+        type : action.payload.type
       }
     },
     hideNotification(state, action) {
