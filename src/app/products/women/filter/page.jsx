@@ -1,18 +1,17 @@
 "use client"
 
-import React from 'react'
-import { useFetchType } from '@/hooks/api'
-import Link from 'next/link';
-import { montserrat } from '../layout';
-import Editbar from '@/components/editbar';
+import { montserrat } from '@/app/layout';
 import Card from '@/components/card';
+import Editbar from '@/components/editbar';
 import RowCard from '@/components/row-card';
+import { useFetchType } from '@/hooks/api';
+import Link from 'next/link';
+import React from 'react'
 
-
-export default function FilterTerm({ params, searchParams }) {
+export default function FilterWomen({ params, searchParams }) {
   const [ layout, setLayout ] = React.useState('grid');
   const { minValue, maxValue } = searchParams
-  const { isLoading, products, error, memoizedFetchData } = useFetchType({type: "filter", minValue, maxValue});
+  const { isLoading, products, error, memoizedFetchData } = useFetchType({type: "filter", minValue, maxValue, cat : "Women"});
   console.log(products);
   console.log(params, searchParams)
   return (

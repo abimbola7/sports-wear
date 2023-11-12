@@ -4,17 +4,31 @@ import React, { useState } from 'react';
 import MultiRangeSlider, { ChangeResult } from "multi-range-slider-react";
 import { LiaTimesSolid } from 'react-icons/lia';
 import { useSearchParams, useRouter } from 'next/navigation';
-
+import { useSelector, useDispatch } from 'react-redux';
+import { modalActions } from '@/store/modalSlice';
+import { usePathname, useParams } from 'next/navigation';
 
 export default function Filter() {
+  const pathname  = usePathname();
+  const params  = useParams();
+  const dispatch = useDispatch()
+  const isFilter = useSelector(state=>state.modal.filterIsToggled)
   const [minValue, setMinValue] = useState(10);
   const [maxValue, setMaxValue] = useState(130);
   const router = useRouter();
-  const searchParams = useSearchParams();
-  // const [ buttonHandler, setButtonHandler ] = useState(false);
+  console.log(pathname, params);
 
   const filterPrice = () => {
-   router.push(`/filter/?minValue=${minValue}&maxValue=${maxValue}`) 
+   router.push(
+    `${pathname === "/products" ? "/products/filter" :
+        pathname === "/products/men" ? "/products/men/filter" :
+        pathname === "/products/women" ? "/products/women/filter" :
+        "/products/filter"
+      }?minValue=${minValue}&maxValue=${maxValue}`)
+  //  router.push(`/products/filter?minValue=${minValue}&maxValue=${maxValue}`) 
+   setTimeout(() => {
+    dispatch(modalActions.toggleFilter())
+    }, 500);
   }
   
   const inputHandler = (e) => {
@@ -26,13 +40,14 @@ export default function Filter() {
   return (
     <>
       {
+        isFilter &&
         (
           <div 
-          // onClick={()=>dispatch(modalActions.toggleCart())}
+          onClick={()=>dispatch(modalActions.toggleFilter())}
           className='fixed top-0 w-full h-screen bg-black bg-opacity-40' />
         )
       }
-      <div className={`top-0 left-0 h-screen w-[33rem] max-w-full bg-white fixed z-[100000] transition-transform duration-200 ease-out'}`}>
+      <div className={`top-0 left-0 h-screen w-[33rem] max-w-full bg-white fixed z-[100000] transition-transform duration-200 ease-out ${!isFilter ? "-translate-x-[33rem]" : "translate-x-0"}`}>
         <div className='flex items-center justify-end px-3 py-3'>
           <LiaTimesSolid  
           

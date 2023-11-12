@@ -14,7 +14,7 @@ import Editbar from '@/components/editbar';
 
 export default function Women(params) {
   const [ layout, setLayout ] = React.useState('grid');
-  const { products, isLoading, error, memoizedFetchData } = useFetchType("Women")
+  const { isLoading, error, products, memoizedFetchData } = useFetchType({type: "category", cat : "Women"})
   return (
     <main
     className='min-h-screen mt-24 max-w-[92rem] mx-auto text-customBlack px-5 '

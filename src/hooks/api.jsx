@@ -3,7 +3,7 @@ import React from  "react";
 import { db } from "../../firebase";
 
 export const useFetchType = (data) => {
-  console.log(data.minValue, data.maxValue, data.cat)
+  console.log(data.minValue, data.maxValue, data.type, data.cat)
   const [isLoading, setIsLoading] = React.useState(true)
   const [error, setError] = React.useState(null)
   const [products, setProducts] = React.useState(null)
@@ -11,13 +11,17 @@ export const useFetchType = (data) => {
     setError(null);
     setIsLoading(true);
     let q;
+    let filteredQuery;
     try {
       if (data.type === "category") {
         q = query(collection(db, "products"), where('category', 'array-contains', data.cat)); 
       }else if (data.type === "filter"){ 
-        q = query(collection(db, "products"), where('price', '>=', +data.minValue), where('price', '<=', +data.maxValue)); 
+        q = query(collection(db, "products"),
+         where('category', 'array-contains', data.cat), 
+         where('price', '>=', +data.minValue), 
+         where('price', '<=', +data.maxValue)
+         );
       }
-      
       const querySnaphot = await getDocs(q)
       console.log(querySnaphot)
       if (querySnaphot.empty) {
@@ -31,15 +35,15 @@ export const useFetchType = (data) => {
       setProducts(newData);
 
     } catch(error) {
+      console.log(error)
       setError("Something went wrong");
     } finally {
       setIsLoading(false)
     }
   }
   const memoizedFetchData = React.useCallback(fetchData, [data.cat, data.type, data.maxValue, data.minValue]);
-  
   React.useEffect(()=> {
     memoizedFetchData()
   }, [memoizedFetchData])
-  return { isLoading, products, error}
+  return { isLoading, products, error, memoizedFetchData}
 }

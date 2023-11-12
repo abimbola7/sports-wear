@@ -3,7 +3,7 @@
 import React from 'react'
 import { useFetchType } from '@/hooks/api'
 import Link from 'next/link';
-import { montserrat } from '../layout';
+import { montserrat } from '@/app/layout';
 import Editbar from '@/components/editbar';
 import Card from '@/components/card';
 import RowCard from '@/components/row-card';
@@ -12,7 +12,7 @@ import RowCard from '@/components/row-card';
 export default function FilterTerm({ params, searchParams }) {
   const [ layout, setLayout ] = React.useState('grid');
   const { minValue, maxValue } = searchParams
-  const { isLoading, products, error, memoizedFetchData } = useFetchType({type: "filter", minValue, maxValue});
+  const { isLoading, products, error } = useFetchType({type: "filter", minValue, maxValue});
   console.log(products);
   console.log(params, searchParams)
   return (

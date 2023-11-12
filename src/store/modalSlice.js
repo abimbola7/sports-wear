@@ -18,7 +18,11 @@ const modalSlice  = createSlice({
     },
     toggleCart(state, action) {
       state.cartIsToggled = !state.cartIsToggled
-    }
+    },
+    toggleFilter(state, action) {
+      state.filterIsToggled = !state.filterIsToggled
+    },
+
   }
 })
 
