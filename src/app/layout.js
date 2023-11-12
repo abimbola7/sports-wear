@@ -6,6 +6,8 @@ import Providers from '@/store/provider'
 import NextAuthSessionProvider from './provider/sessionProvider'
 import CartModal from '@/components/cartmodal'
 import CartNotification from '@/components/cartnotification'
+import SideBars from '@/components/sidebars'
+import Filter from '@/components/filter'
 
 const inter = Inter({ subsets: ['latin'] })
 export const oswald = Oswald({
@@ -30,10 +32,11 @@ export const montserrat = Montserrat({
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${inter.className} selection:bg-darkOrange`}>
         <NextAuthSessionProvider>
           <Providers
           >
+            <SideBars />
             <Header/>
             <CartNotification />
             {/* <Modal /> */}
@@ -41,6 +44,7 @@ export default function RootLayout({ children }) {
 
             <Footer />
             <CartModal />
+            <Filter />
           </Providers>
         </NextAuthSessionProvider>
       </body>

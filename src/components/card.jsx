@@ -20,7 +20,6 @@ export default function Card({ imageUrl, name, price, id, amount }) {
   const isLoading = useSelector(state=>state.cart.isLoading);
   const [ ids, setIds ] = React.useState(null)
   const modal = useSelector(state=>state.modal.isToggled);
-  let content;
   const openModal = () => {
     dispatch(modalActions.toggleModal());
     setIds(id);

@@ -8,6 +8,7 @@ import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { modalActions } from '@/store/modalSlice'
 import { fetchShoeData } from '@/store/cartSlice'
+import { hamburgerToggler } from '@/store/uiSlice'
 import {signIn, signOut, useSession } from 'next-auth/react'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -53,6 +54,7 @@ export default function Header() {
   return (
     <header 
     className={`${montserrat.className} font-extrabold z-[100000] transition-colors duration-500 !bg-transparent`}>
+      {/* <SideBar /> */}
       <div
       className='flex items-center justify-between px-4 py-4 mx-auto max-w-7xl md:px-2'
       >
@@ -87,7 +89,7 @@ export default function Header() {
           <div className='items-center hidden space-x-4 font-medium text-darkOrange md:inline-flex'>
               <AiOutlineSearch className="icon"/>
               <p>${totalPrice.toFixed(2)}</p>
-              <div className='relative'>
+              <div className='relative z-1'>
                 <div className='absolute px-1 text-xs text-white rounded-full pointer-events-none -top-1 left-4 bg-darkOrange'>{ totaAmount }</div>
                 <PiShoppingCartFill 
                 onClick={()=>dispatch(modalActions.toggleCart())}
@@ -109,8 +111,10 @@ export default function Header() {
           </div> 
        }
 
-       <div className="p-2 rounded-sm bg-darkOrange md:hidden">
-          <AiOutlineMenu className='text-xl cursor-pointer'/>
+       <div 
+       onClick={()=>dispatch(hamburgerToggler())}
+       className="p-2 rounded-sm bg-darkOrange md:hidden cursor-pointer">
+          <AiOutlineMenu className='text-xl text-white'/>
        </div>
       </div>
     </header>

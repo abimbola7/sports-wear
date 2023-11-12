@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialUiState = {
-  notification : null
+  notification : null,
+  hamburgerIsToggled : false
 }
 
 const uiSlice = createSlice({
@@ -17,9 +18,12 @@ const uiSlice = createSlice({
     },
     hideNotification(state, action) {
       state.notification = null
+    },
+    hamburgerToggler(state, action) {
+      state.hamburgerIsToggled = !state.hamburgerIsToggled
     }
   }
 })
 
-export const { showNotification, hideNotification } =  uiSlice.actions;
+export const { showNotification, hideNotification, hamburgerToggler } =  uiSlice.actions;
 export default uiSlice.reducer;

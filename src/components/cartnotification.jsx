@@ -33,7 +33,7 @@ export default function CartNotification() {
   }, [dispatch, notification])
   
   return (
-    <div className={`p-4 mt-3 border-t-4 ${notification?.status === "success" ? "border-t-black bg-[#8a8989]" : "border-t-red-500 bg-red-100"} ${ visible ? 'flex' : 'hidden' } ${montserrat.className} fixed -top-3 z-[1000] w-full`}>
+    <div className={`p-4 mt-3 border-t-4 ${notification?.status === "success" && "border-t-black bg-[#8a8989]"} ${notification?.status === "error" && "border-t-red-500 bg-red-100"} ${ visible ? 'flex' : 'hidden' } ${montserrat.className} fixed -top-3 z-[1000] w-full`}>
       {
         notification && notification.type === "add" && (
           <div className='sm:text-md text-lg flex items-center'><TiTickOutline className='flex-shrink-0 mr-3' /> {name} has been added to cart!</div>

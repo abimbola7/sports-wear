@@ -52,7 +52,7 @@ export default function SideCart({ id, name, imageUrl, price, amount }) {
       <div className='flex flex-col items-center justify-center space-y-3'>
         <LiaTimesCircle 
         className='text-3xl cursor-pointer text-textGray'
-        onClick={()=>dispatch(clearedCart({ uid : data?.user?.uid, id : id }))}
+        onClick={()=>dispatch(clearedCart({ uid : data?.user?.uid, id : id, name : name }))}
         />
         <p>${ (amount * price).toFixed(2) }</p>
       </div>

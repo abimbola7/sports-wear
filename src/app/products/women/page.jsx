@@ -9,6 +9,7 @@ import { HiViewGrid } from 'react-icons/hi';
 import { VscSettings } from 'react-icons/vsc';
 import { useFetchType } from '@/hooks/api';
 import { montserrat, oswald } from '@/app/layout';
+import Editbar from '@/components/editbar';
 
 
 export default function Women(params) {
@@ -20,24 +21,12 @@ export default function Women(params) {
     >
     <div className={`flex text-textGray ${montserrat.className} text-md`}>
       <Link href={"/"} className="mr-1">Home </Link> {" / "}
-      <p className='ml-1'>Men</p>
+      <p className='ml-1'>Women</p>
     </div>
-    <div
-    className='flex justify-between items-center text-textGray my-10 sticky top-0 z-[10]'
-    >
-      <p className='flex cursor-pointer'>
-        <VscSettings className='text-xl rotate-90'/>
-        <span className='ml-2'>Filter</span>
-      </p>
-      <div className='flex items-center space-x-3'>
-        <HiViewGrid 
-        onClick={()=>setLayout('grid')}
-        className={`text-3xl transition-transform hover:scale-110 duration-200 ease-out cursor-pointer ${ layout === "grid" && 'text-darkOrange'}`}/>
-        <FaThList 
-        onClick={()=>setLayout('list')}
-        className={`text-2xl transition-transform hover:scale-110 duration-200 ease-out cursor-pointer ${ layout === "list" && 'text-darkOrange'}`}/>
-      </div>
-    </div>
+    <Editbar  
+      layout={layout}
+      setLayout={setLayout}
+    />
     {
           isLoading && !error && !products && (
             <div className='flex justify-center'>

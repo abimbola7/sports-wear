@@ -1,3 +1,4 @@
+import { montserrat } from '@/app/layout'
 import React from 'react'
 
 export default function ErrorComp({ error }) {

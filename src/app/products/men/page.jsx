@@ -11,16 +11,25 @@ import { db } from '../../../../firebase';
 import { montserrat, oswald } from '@/app/layout';
 import { usePathname } from 'next/navigation';
 import { useFetchType } from '@/hooks/api';
+import Editbar from '@/components/editbar';
 
 export default function Men(params) {
   const pathname = usePathname();
-  const { isLoading, error, products } = useFetchType("Men")
+  const { isLoading, error, products, memoizedFetchData } = useFetchType({type: "category", cat : "Men"})
   const [ layout, setLayout ] = React.useState('grid');
   
   return (
     <main
     className='min-h-screen mt-24 max-w-[92rem] mx-auto text-customBlack px-5 '
     >
+      <div className={`flex text-textGray ${montserrat.className} text-md`}>
+        <Link href={"/"} className="mr-1">Home </Link> {" / "}
+        <p className='ml-1'>Men</p>
+      </div>
+      <Editbar  
+      layout={layout}
+      setLayout={setLayout}
+      />
     {
           isLoading && !error && !products && (
             <div className='flex justify-center'>

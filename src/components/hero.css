@@ -1,3 +1,6 @@
 .hero {
   background-image: linear-gradient(to top, rgba(0, 0, 0, 0.5) , rgba(0, 0, 0, 0.3)), url(https://firebasestorage.googleapis.com/v0/b/sport-wear-store.appspot.com/o/sports-hero-img.jpg?alt=media&token=0a308ed0-8472-4d0f-be5f-a16ad86e1110);
+  background-repeat: no-repeat;
+  background-position:70%;
+  background-size: cover;
 }

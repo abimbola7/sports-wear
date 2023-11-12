@@ -4,7 +4,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialModalState = {
   isToggled : false,
-  cartIsToggled  : false
+  cartIsToggled  : false,
+  filterIsToggled : false,
 }
 
 

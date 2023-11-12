@@ -13,7 +13,7 @@ export default function CartModal() {
   const dispatch = useDispatch();
   const cartss = useSelector(state=>state.cart.cart);
   const carts = useMemo(() => cartss, [cartss]);
-  const [ totalPrice, setTotalPrice ] = React.useState([])
+  const [ totalPrice, setTotalPrice ] = React.useState(0)
   const isLoading = useSelector(state=>state.cart.isLoading);
   const error = useSelector(state=>state.cart.error);
   const cartModal = useSelector(state=>state.modal.cartIsToggled);

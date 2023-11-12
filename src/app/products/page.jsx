@@ -11,6 +11,7 @@ import { db } from '../../../firebase'
 import RowCard from '@/components/row-card'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchProducts } from '@/store/productsSlice'
+import Editbar from '@/components/editbar'
 
 
 export default function Products() {
@@ -36,22 +37,10 @@ export default function Products() {
       <Link href={"/"} className="mr-1">Home </Link> {" / "}
       <p className='ml-1'>Shop</p>
     </div>
-    <div
-    className='flex justify-between items-center text-textGray my-10 sticky top-0 z-[10]'
-    >
-      <p className='flex cursor-pointer'>
-        <VscSettings className='text-xl rotate-90'/>
-        <span className='ml-2'>Filter</span>
-      </p>
-      <div className='flex items-center space-x-3'>
-        <HiViewGrid 
-        onClick={()=>setLayout('grid')}
-        className={`text-3xl transition-transform hover:scale-110 duration-200 ease-out cursor-pointer ${ layout === "grid" && 'text-darkOrange'}`}/>
-        <FaThList 
-        onClick={()=>setLayout('list')}
-        className={`text-2xl transition-transform hover:scale-110 duration-200 ease-out cursor-pointer ${ layout === "list" && 'text-darkOrange'}`}/>
-      </div>
-    </div>
+    <Editbar  
+      layout={layout}
+      setLayout={setLayout}
+    />
     {
           reduxIsLoading && reduxProducts.length === 0 ? (
             <div className='flex justify-center'>
