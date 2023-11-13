@@ -1,27 +1,33 @@
 "use client"
-
 import React from 'react'
-import { useFetchType } from '@/hooks/api'
-import Link from 'next/link';
-import { montserrat } from '../layout';
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchSearch } from '@/store/productsSlice'
 import Editbar from '@/components/editbar';
-import Card from '@/components/card';
+import Link from 'next/link';
 import RowCard from '@/components/row-card';
+import Card from '@/components/card';
+import { montserrat } from '../layout';
+import { useRouter } from 'next/navigation';
 
-
-export default function FilterTerm({ params, searchParams }) {
+export default function Search({ searchParams }) {
+  const router = useRouter()
+  const { searchTerm } = searchParams;
+  const products = useSelector(state=>state.products.search);
+  const isLoading = useSelector(state=>state.products.isLoading);
+  const error = useSelector(state=>state.products.error);
+  const dispatch = useDispatch();
   const [ layout, setLayout ] = React.useState('grid');
-  const { minValue, maxValue } = searchParams
-  const { isLoading, products, error, memoizedFetchData } = useFetchType({type: "filter", minValue, maxValue});
-  console.log(products);
-  console.log(params, searchParams)
+  React.useEffect(()=>{
+    dispatch(fetchSearch(searchTerm))
+  }, [dispatch, searchTerm])
   return (
     <main
     className='min-h-screen mt-24 max-w-[92rem] mx-auto text-customBlack px-5 '
     >
     <div className={`flex text-textGray ${montserrat.className} text-md`}>
       <Link href={"/"} className="mr-1">Home </Link> {" / "}
-      <p className='ml-1'>Women</p>
+      <p className='ml-1'>Shop</p> {" /"}
+      <p>Search results for &quot;{searchTerm}&quot;</p>
     </div>
     <Editbar  
       layout={layout}
@@ -39,11 +45,11 @@ export default function FilterTerm({ params, searchParams }) {
     {
           !isLoading && error && (
             <div className={`${montserrat.className} text-center w-full`}>
-              Something went wrong
+              {error}
               <button 
-                onClick={()=>memoizedFetchData()}
+                onClick={()=>router.back()}
                 className={`bg-darkOrange px-4 py-2 rounded-3xl text-white ml-3 ${montserrat.className}`}>
-                  Try again
+                  Go Back
               </button>
             </div>
           ) 
@@ -85,7 +91,7 @@ export default function FilterTerm({ params, searchParams }) {
                 }
               </>
           )
-        }
+    }
     </main>
   )
 }

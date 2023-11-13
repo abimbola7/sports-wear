@@ -13,8 +13,7 @@ export default function FilterTerm({ params, searchParams }) {
   const [ layout, setLayout ] = React.useState('grid');
   const { minValue, maxValue } = searchParams
   const { isLoading, products, error } = useFetchType({type: "filter", minValue, maxValue});
-  console.log(products);
-  console.log(params, searchParams)
+  // console.log("wrongthing")
   return (
     <main
     className='min-h-screen mt-24 max-w-[92rem] mx-auto text-customBlack px-5 '

@@ -2,12 +2,7 @@
 import Link from 'next/link'
 import React from 'react'
 import { montserrat, oswald } from '../layout'
-import { VscSettings } from "react-icons/vsc"
-import { HiViewGrid } from "react-icons/hi";
-import { FaThList } from "react-icons/fa";
 import Card from '@/components/card'
-import { collection, getDocs, query, where } from 'firebase/firestore'
-import { db } from '../../../firebase'
 import RowCard from '@/components/row-card'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchProducts } from '@/store/productsSlice'
@@ -21,11 +16,8 @@ export default function Products() {
   console.log(reduxIsLoading)
   const dispatch = useDispatch();
   const [ layout, setLayout ] = React.useState('grid');
-  const [ isLoading, setIsLoading  ] = React.useState(false);
-  const [ products, setProducts ] = React.useState([])
 
   React.useEffect(()=>{
-    console.log("does it work")
     dispatch(fetchProducts())
   }, [dispatch])
 

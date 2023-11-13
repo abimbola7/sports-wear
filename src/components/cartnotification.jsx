@@ -9,7 +9,6 @@ import { RiErrorWarningLine } from "react-icons/ri"
 
 export default function CartNotification() {
   const notification = useSelector(state=>state.ui.notification);
-  console.log(notification?.status)
   const name = useSelector(state=>state.cart.cartName)
   const [ visible, setVisible ]= React.useState(false);
   const dispatch = useDispatch()

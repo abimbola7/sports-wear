@@ -50,7 +50,7 @@ export default function Header() {
     dispatch(fetchShoeData(data))
   }, [dispatch, data?.user?.uid])
 
-  console.log(data)
+  // console.log(data)
   return (
     <header 
     className={`${montserrat.className} font-extrabold z-[100000] transition-colors duration-500 !bg-transparent`}>

@@ -11,7 +11,6 @@ export default function SideBars() {
   const dispatch = useDispatch();
   const pathName = usePathname()
   const hamburgerState = useSelector(state=>state.ui.hamburgerIsToggled) 
-  console.log(hamburgerState);
   return (
     <div className={`${!hamburgerState && "hidden"} w-full h-screen bg-white fixed z-[100000] md:hidden`}>
       <div className="py-4 flex items-center justify-end px-4">

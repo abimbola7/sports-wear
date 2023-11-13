@@ -7,6 +7,7 @@ const initialProductsState = {
   latest : [],
   men : [],
   women : [],
+  search : [],
   isLoading : false,
   error : null
 }
@@ -34,9 +35,21 @@ const productsSlice = createSlice({
     builder.addCase( fetchLatest.fulfilled, (state, action) => {
       state.isLoading = false;
       state.latest = action.payload;
-      console.log(state.latest)
     });
     builder.addCase( fetchLatest.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    });
+
+    builder.addCase( fetchSearch.pending, (state, action) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase( fetchSearch.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.search = action.payload;
+    });
+    builder.addCase( fetchSearch.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     });
@@ -47,9 +60,7 @@ const productsSlice = createSlice({
 export const fetchProducts = createAsyncThunk(
   'products/fetchProducts',
   async () => {
-    console.log("ddddddddddd")
     const q = collection(db, "products");
-    console.log(q)
     const querySnapshot  = await getDocs(q)
     const newData = querySnapshot.docs.map(doc=>(
       {
@@ -63,11 +74,9 @@ export const fetchProducts = createAsyncThunk(
 export const fetchLatest = createAsyncThunk(
   'product/fetchLatest',
   async (data, {rejectWithValue}) => {
-    console.log("fff")
     try {
       const q = query(collection(db, "products"), where("latest", "==", true));
       const querySnapshot = await getDocs(q);
-      console.log(querySnapshot)
       if (querySnapshot.empty) { 
         throw new Error("Something went wrong")
       }else {
@@ -78,7 +87,42 @@ export const fetchLatest = createAsyncThunk(
         return newData;
       }
     } catch (error) {
-      console.log(error.message)
+      return rejectWithValue(error.message)
+    }
+  }
+)
+
+export const fetchSearch = createAsyncThunk(
+  'product/fetchSearch',
+  async (data, {dispatch, rejectWithValue}) => {
+    try {
+      const queryByName = query(collection(db, "products"), where("name", ">=", data));
+      const queryByCategory = query(collection(db, "products"), where('category', 'array-contains', data)); 
+      const queryByTags = query(collection(db, "products"), where('tags', 'array-contains', data)); 
+      const nameQuerySnapshot = await getDocs(queryByName);
+      const categoryQuerySnapshot = await getDocs(queryByCategory);
+      const tagsQuerySnapshot = await getDocs(queryByTags);
+      if (nameQuerySnapshot.empty && categoryQuerySnapshot.empty && tagsQuerySnapshot.empty) { 
+        throw new Error("Cannot Find Item")
+      }else {
+        const nameData = nameQuerySnapshot.docs.map(doc => ({
+          ...doc.data(),
+          id: doc.id
+        }));
+        const categoryData = categoryQuerySnapshot.docs.map(doc => ({
+          ...doc.data(),
+          id: doc.id
+        }));
+        const tagsData = tagsQuerySnapshot.docs.map(doc => ({
+          ...doc.data(),
+          id: doc.id
+        }));
+        const uniqueArray = [...nameData, ...categoryData, ...tagsData].filter((item, index, self) => {
+          return index === self.findIndex(obj => obj.id === item.id);
+        });
+        return uniqueArray;
+      }
+    } catch (error) {
       return rejectWithValue(error.message)
     }
   }

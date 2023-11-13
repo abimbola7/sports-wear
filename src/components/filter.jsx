@@ -7,25 +7,36 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import { useSelector, useDispatch } from 'react-redux';
 import { modalActions } from '@/store/modalSlice';
 import { usePathname, useParams } from 'next/navigation';
+import { useFetchType } from '@/hooks/api';
+import SearchBar from './searchbar';
+
 
 export default function Filter() {
   const pathname  = usePathname();
-  const params  = useParams();
+  const searchTerm = useSearchParams().get('searchTerm');
+  console.log(pathname)
   const dispatch = useDispatch()
   const isFilter = useSelector(state=>state.modal.filterIsToggled)
   const [minValue, setMinValue] = useState(10);
   const [maxValue, setMaxValue] = useState(130);
   const router = useRouter();
-  console.log(pathname, params);
+  const { products:menProducts } = useFetchType({type: "category", cat : "Men"})
+  const { products:womenProducts } = useFetchType({type: "category", cat : "Women"})
+  const { products:packsAndGears } = useFetchType({type: "category", cat : "Packs & Gear"})
+  const filterCategories = [
+    { name : "Men", amount : menProducts?.length },
+    { name : "Women", amount : womenProducts?.length },
+    { name : "Packs & Gear", amount : packsAndGears?.length },
+  ]
 
   const filterPrice = () => {
    router.push(
     `${pathname === "/products" ? "/products/filter" :
         pathname === "/products/men" ? "/products/men/filter" :
         pathname === "/products/women" ? "/products/women/filter" :
-        "/products/filter"
-      }?minValue=${minValue}&maxValue=${maxValue}`)
-  //  router.push(`/products/filter?minValue=${minValue}&maxValue=${maxValue}`) 
+        pathname ===  "/search" ? `/search/filter?searchTerm=${searchTerm}` :
+        pathname
+      }${pathname === "/search" ? "&" : pathname === "/search/filter" ? `?searchTerm=${searchTerm}&`: "?"}minValue=${minValue}&maxValue=${maxValue}`)
    setTimeout(() => {
     dispatch(modalActions.toggleFilter())
     }, 500);
@@ -47,13 +58,16 @@ export default function Filter() {
           className='fixed top-0 w-full h-screen bg-black bg-opacity-40' />
         )
       }
-      <div className={`top-0 left-0 h-screen w-[33rem] max-w-full bg-white fixed z-[100000] transition-transform duration-200 ease-out ${!isFilter ? "-translate-x-[33rem]" : "translate-x-0"}`}>
+      <div className={` space-y-12 top-0 left-0 h-screen w-[33rem] max-w-full bg-white fixed z-[100000] transition-transform duration-200 ease-out ${!isFilter ? "-translate-x-[33rem]" : "translate-x-0"}`}>
         <div className='flex items-center justify-end px-3 py-3'>
           <LiaTimesSolid  
           
           className='text-2xl cursor-pointer'/>
         </div>
-        <div className="px-10">
+        <div className='px-10'>
+          <SearchBar minValue={minValue} maxValue={maxValue} />
+        </div>
+        <div className="px-10 mt-4">
           <h2 className={`${oswald.className} text-2xl`}>Filter by price</h2>
           <div>
             <MultiRangeSlider
@@ -83,12 +97,17 @@ export default function Filter() {
           <div className='flex items-center justify-end mt-6 space-x-4'>
             <button 
             onClick={filterPrice}
-            className='px-5 py-1 text-sm font-medium text-white rounded-3xl bg-darkOrange'>APPLY</button>
+            className='px-8 py-3 text-sm font-medium text-white rounded-3xl bg-darkOrange'>APPLY</button>
           </div>
         </div>
         </div>
-        <div>
-          <h2 className={`${oswald.className} text-2xl`}>Filter by Categories</h2>
+        <div className="px-10">
+          <h2 className={`${oswald.className} text-2xl font-medium text-textGray`}>Filter by Categories</h2>
+          <div className={`${montserrat.className} text-xl mt-4`}>
+            {filterCategories.map(cat=>(
+              <p key={cat.name} className="px-3">{cat.name} <span className='ml-1'>({cat.amount})</span></p>
+            ))}
+          </div>
         </div>
       </div>
     </>

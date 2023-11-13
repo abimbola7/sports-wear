@@ -1,19 +1,20 @@
 "use client"
 
-import { montserrat } from '@/app/layout';
-import Card from '@/components/card';
-import Editbar from '@/components/editbar';
-import RowCard from '@/components/row-card';
-import { useFetchType } from '@/hooks/api';
-import Link from 'next/link';
 import React from 'react'
+import { useFetchType } from '@/hooks/api'
+import Link from 'next/link';
+import { montserrat } from '@/app/layout';
+import Editbar from '@/components/editbar';
+import Card from '@/components/card';
+import RowCard from '@/components/row-card';
+import { useSearch } from '@/hooks/useSearch';
 
-export default function FilterMen({ params, searchParams }) {
+
+export default function FilterTerm({ params, searchParams }) {
   const [ layout, setLayout ] = React.useState('grid');
-  const { minValue, maxValue } = searchParams
-  const { isLoading, products, error,memoizedFetchData } = useFetchType({type: "filter", minValue, maxValue, cat : "Men"});
-  // console.log(products);
-  // console.log(params, searchParams)
+  const { minValue, maxValue, searchTerm } = searchParams
+  const { isLoading, products, error } = useSearch({minValue, maxValue, searchTerm});
+  console.log(isLoading)
   return (
     <main
     className='min-h-screen mt-24 max-w-[92rem] mx-auto text-customBlack px-5 '
@@ -38,7 +39,7 @@ export default function FilterMen({ params, searchParams }) {
     {
           !isLoading && error && (
             <div className={`${montserrat.className} text-center w-full`}>
-              Something went wrong
+              {error}
               <button 
                 onClick={()=>memoizedFetchData()}
                 className={`bg-darkOrange px-4 py-2 rounded-3xl text-white ml-3 ${montserrat.className}`}>
