@@ -1,14 +1,16 @@
 "use client"
 
-import { montserrat } from '@/app/layout';
+import { montserrat, oswald } from '@/app/layout';
 import Card from '@/components/card';
 import Editbar from '@/components/editbar';
 import RowCard from '@/components/row-card';
 import { useFetchType } from '@/hooks/api';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React from 'react'
 
 export default function FilterWomen({ params, searchParams }) {
+  const router = useRouter()
   const [ layout, setLayout ] = React.useState('grid');
   const { minValue, maxValue } = searchParams
   const { isLoading, products, error, memoizedFetchData } = useFetchType({type: "filter", minValue, maxValue, cat : "Women"});
@@ -26,6 +28,12 @@ export default function FilterWomen({ params, searchParams }) {
       layout={layout}
       setLayout={setLayout}
     />
+    <div className={`my-5 ${montserrat.className} space-y-3 text-sm`}>
+      <h1 className={`${oswald.className} font-medium text-4xl !mb-3`}>Active Filter</h1>
+      <span className='font-light'>Min ${searchParams.minValue}</span>
+      <span  className='ml-3 font-light'>Max ${searchParams.maxValue}</span>
+      <Link href="/products/women" className="bg-darkOrange py-3 text-white block px-3 rounded-3xl w-fit hover:bg-opacity-50">Cancel Filter</Link>
+    </div>
     {
           isLoading && !error && !products && (
             <div className='flex justify-center'>
@@ -38,11 +46,11 @@ export default function FilterWomen({ params, searchParams }) {
     {
           !isLoading && error && (
             <div className={`${montserrat.className} text-center w-full`}>
-              Something went wrong
+              Could not find item
               <button 
-                onClick={()=>memoizedFetchData()}
+                onClick={()=>router.back()}
                 className={`bg-darkOrange px-4 py-2 rounded-3xl text-white ml-3 ${montserrat.className}`}>
-                  Try again
+                  Go Back
               </button>
             </div>
           ) 

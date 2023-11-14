@@ -26,7 +26,7 @@ export default function Search({ searchParams }) {
     >
     <div className={`flex text-textGray ${montserrat.className} text-md`}>
       <Link href={"/"} className="mr-1">Home </Link> {" / "}
-      <p className='ml-1'>Shop</p> {" /"}
+      <Link href={"/products"} className='ml-1'>Shop</Link> {" /"}
       <p>Search results for &quot;{searchTerm}&quot;</p>
     </div>
     <Editbar  

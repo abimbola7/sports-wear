@@ -87,7 +87,7 @@ export default function Header() {
        {/* right */}
        {
           <div className='items-center hidden space-x-4 font-medium text-darkOrange md:inline-flex'>
-              <AiOutlineSearch className="icon"/>
+              {/* <AiOutlineSearch className="icon"/> */}
               <p>${totalPrice.toFixed(2)}</p>
               <div className='relative z-1'>
                 <div className='absolute px-1 text-xs text-white rounded-full pointer-events-none -top-1 left-4 bg-darkOrange'>{ totaAmount }</div>

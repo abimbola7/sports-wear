@@ -88,6 +88,7 @@ export const fetchCart = createAsyncThunk(
 export const clearedCart = createAsyncThunk(
   "content/fetchCart",
   async (data, {dispatch, getState, rejectWithValue }) => {
+    const previousCart = getState().cart.cart;
     try {
       const { uid, id, name} = data;
       dispatch(cartAction.clearCart(id));
@@ -95,12 +96,14 @@ export const clearedCart = createAsyncThunk(
       const db = getFirestore();
       const collectionRef = doc(db, 'carts', uid);
       await setDoc(collectionRef, { cart: carts }, { merge: true });
+      dispatch(cartAction.cartName(name))
       dispatch(showNotification({
         type : "delete",
         status : "success",
         message : `"${name}" removed.`
       }))
     } catch (error) {
+      dispatch(cartAction.setCart(previousCart));
       dispatch(showNotification({
         type : "error",
         status : "error",

@@ -40,7 +40,7 @@ export const useSearch = (data) => {
       }
     } catch (error) {
       console.log(error)
-      setError("Something went wrong")
+      setError(error.message)
       // return rejectWithValue(error.message)
     }finally {
       setIsLoading(false)

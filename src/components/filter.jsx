@@ -9,6 +9,7 @@ import { modalActions } from '@/store/modalSlice';
 import { usePathname, useParams } from 'next/navigation';
 import { useFetchType } from '@/hooks/api';
 import SearchBar from './searchbar';
+import Link from 'next/link';
 
 
 export default function Filter() {
@@ -58,7 +59,7 @@ export default function Filter() {
           className='fixed top-0 w-full h-screen bg-black bg-opacity-40' />
         )
       }
-      <div className={` space-y-12 top-0 left-0 h-screen w-[33rem] max-w-full bg-white fixed z-[100000] transition-transform duration-200 ease-out ${!isFilter ? "-translate-x-[33rem]" : "translate-x-0"}`}>
+      <div className={` space-y-12 top-0 left-0 h-screen w-[25rem] max-w-full bg-white fixed z-[100000] transition-transform duration-200 ease-out ${!isFilter ? "-translate-x-[25rem]" : "translate-x-0"}`}>
         <div className='flex items-center justify-end px-3 py-3'>
           <LiaTimesSolid  
           
@@ -103,11 +104,18 @@ export default function Filter() {
         </div>
         <div className="px-10">
           <h2 className={`${oswald.className} text-2xl font-medium text-textGray`}>Filter by Categories</h2>
-          <div className={`${montserrat.className} text-xl mt-4`}>
+          <ul className={`${montserrat.className} text-xl mt-4`}>
             {filterCategories.map(cat=>(
-              <p key={cat.name} className="px-3">{cat.name} <span className='ml-1'>({cat.amount})</span></p>
+              <li
+              key={cat.name} 
+              className="px-3 hover:text-darkOrange transition-colors duration-200"
+              >
+                <Link 
+                href={`/products/${cat.name.toLowerCase()}`} 
+                >{cat.name} <span className='ml-1'>({cat.amount})</span></Link>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </div>
     </>

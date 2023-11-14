@@ -7,9 +7,11 @@ import { montserrat } from '@/app/layout';
 import Editbar from '@/components/editbar';
 import Card from '@/components/card';
 import RowCard from '@/components/row-card';
+import { useRouter } from 'next/navigation';
 
 
 export default function FilterTerm({ params, searchParams }) {
+  const router = useRouter()
   const [ layout, setLayout ] = React.useState('grid');
   const { minValue, maxValue } = searchParams
   const { isLoading, products, error } = useFetchType({type: "filter", minValue, maxValue});
@@ -38,11 +40,11 @@ export default function FilterTerm({ params, searchParams }) {
     {
           !isLoading && error && (
             <div className={`${montserrat.className} text-center w-full`}>
-              Something went wrong
+              Could not find item
               <button 
-                onClick={()=>memoizedFetchData()}
+                onClick={()=>router.back()}
                 className={`bg-darkOrange px-4 py-2 rounded-3xl text-white ml-3 ${montserrat.className}`}>
-                  Try again
+                  Go Back
               </button>
             </div>
           ) 
