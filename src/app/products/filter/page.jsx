@@ -3,7 +3,7 @@
 import React from 'react'
 import { useFetchType } from '@/hooks/api'
 import Link from 'next/link';
-import { montserrat } from '@/app/layout';
+import { montserrat, oswald } from '@/app/layout';
 import Editbar from '@/components/editbar';
 import Card from '@/components/card';
 import RowCard from '@/components/row-card';
@@ -22,12 +22,18 @@ export default function FilterTerm({ params, searchParams }) {
     >
     <div className={`flex text-textGray ${montserrat.className} text-md`}>
       <Link href={"/"} className="mr-1">Home </Link> {" / "}
-      <p className='ml-1'>Women</p>
+      <Link href={"/products"} className="mx-1">Shop </Link>
     </div>
     <Editbar  
       layout={layout}
       setLayout={setLayout}
     />
+    <div className={`my-5 ${montserrat.className} space-y-3 text-sm`}>
+      <h1 className={`${oswald.className} font-medium text-4xl !mb-3`}>Active Filter</h1>
+      <span className='font-light'>Min ${minValue}</span>
+      <span  className='ml-3 font-light'>Max ${maxValue}</span>
+      <Link href="/products/" className="bg-darkOrange py-3 text-white block px-3 rounded-3xl w-fit hover:bg-opacity-50">Cancel Filter</Link>
+    </div>
     {
           isLoading && !error && !products && (
             <div className='flex justify-center'>

@@ -2,12 +2,14 @@ import Image from 'next/image'
 import React from 'react'
 import { montserrat, oswald } from '@/app/layout'
 import CartBtn from './cart-btn'
-import { MdOutlineCancel } from 'react-icons/md';
 import CartButton from './cartBtn1';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useSession } from 'next-auth/react';
-import { cartAction, clearedCart, fetchCart } from '@/store/cartSlice';
+import { clearedCart, fetchCart } from '@/store/cartSlice';
 import { LiaTimesCircle } from 'react-icons/lia';
+import Link from 'next/link';
+import { hamburgerToggler } from '@/store/uiSlice';
+import { modalActions } from '@/store/modalSlice';
 
 
 export default function SideCart({ id, name, imageUrl, price, amount }) {
@@ -41,7 +43,12 @@ export default function SideCart({ id, name, imageUrl, price, amount }) {
         </div>
       </div>
       <div className='col-span-3 space-y-3 '>
-        <p className={`${montserrat.className} font-medium text-textGray text-md tracking-wide`}>{ name }</p>
+        <Link 
+        onClick={()=>{
+          setTimeout(()=>dispatch(modalActions.toggleCart()), 1000)
+        }} 
+        href={`/products/${id}`} 
+        className={`${montserrat.className} font-medium text-textGray text-md tracking-wide hover:text-darkOrange duration-200 transition-colors`}>{ name }</Link>
         <CartButton 
         ref={amountRef} 
         amount={amount}
@@ -49,12 +56,12 @@ export default function SideCart({ id, name, imageUrl, price, amount }) {
         />
       </div>
       
-      <div className='flex flex-col items-center justify-center space-y-3'>
+      <div className={`flex flex-col items-center justify-center space-y-3 font-light text-textGray ${montserrat.className}`}>
         <LiaTimesCircle 
-        className='text-3xl cursor-pointer text-textGray'
+        className='text-2xl cursor-pointer text-textGray'
         onClick={()=>dispatch(clearedCart({ uid : data?.user?.uid, id : id, name : name }))}
         />
-        <p>${ (amount * price).toFixed(2) }</p>
+        <p className='text-md'>${ (amount * price).toFixed(2) }</p>
       </div>
     </div>
   )

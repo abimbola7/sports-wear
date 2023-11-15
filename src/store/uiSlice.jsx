@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialUiState = {
   notification : null,
-  hamburgerIsToggled : false
+  hamburgerIsToggled : false,
 }
 
 const uiSlice = createSlice({

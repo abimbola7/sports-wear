@@ -6,6 +6,7 @@ import React from 'react'
 import { TiTickOutline } from 'react-icons/ti'
 import { useDispatch, useSelector } from 'react-redux'
 import { RiErrorWarningLine } from "react-icons/ri"
+import { easeOut, motion, AnimatePresence } from 'framer-motion'
 
 export default function CartNotification() {
   const notification = useSelector(state=>state.ui.notification);
@@ -15,14 +16,11 @@ export default function CartNotification() {
   React.useEffect(()=>{
     if (notification) {
       setVisible(true)
-
-      // if (cart?.length === 0) {
-      //   return
-      // }
-  
        const timer = setTimeout(() => {
         setVisible(false)
-        dispatch(hideNotification())
+        setTimeout(() => {
+          dispatch(hideNotification())
+        }, 1000);
       }, 2500);
   
       return () => {
@@ -32,22 +30,42 @@ export default function CartNotification() {
   }, [dispatch, notification])
   
   return (
-    <div className={`p-4 mt-3 border-t-4 ${notification?.status === "success" && "border-t-black bg-[#8a8989]"} ${notification?.status === "error" && "border-t-red-500 bg-red-100"} ${ visible ? 'flex' : 'hidden' } ${montserrat.className} fixed -top-3 z-[1000] w-full`}>
+    <AnimatePresence>
       {
-        notification && notification.type === "add" && (
-          <div className='sm:text-md text-lg flex items-center'><TiTickOutline className='flex-shrink-0 mr-3' /> {name} has been added to cart!</div>
+        visible && (
+          <motion.div
+          initial={{
+            x : "-100%"
+          }}
+          animate={{
+            x :"0%"
+          }}    
+          exit={{
+            x : "100%"
+          }}
+          transition={{
+            type : "spring"
+
+          }}
+          className={`p-4 mt-3 border-t-4 ${notification?.status === "success" && "border-t-black bg-[#f0f0f0]"} ${notification?.status === "error" && "border-t-red-500 bg-red-100"} flex ${montserrat.className} fixed -top-2 z-[1000] w-full`}>
+            {
+              notification && notification.type === "add" && (
+                <div className='sm:text-md text-lg flex items-center'><TiTickOutline className='flex-shrink-0 mr-3' /> {name} has been added to cart!</div>
+              )
+            }
+            {
+              notification && notification.type === "delete" && (
+                <div className='sm:text-md text-lg flex items-center'><TiTickOutline className='flex-shrink-0 mr-3' /> {name} has been deleted from cart!</div>
+              )
+            }
+            {
+              notification && notification.type === "error" && (
+                <div className='sm:text-md text-lg flex items-center'><RiErrorWarningLine className='flex-shrink-0 mr-3'/>Error updating cart</div>
+              )
+            }
+          </motion.div>
         )
       }
-      {
-        notification && notification.type === "delete" && (
-          <div className='sm:text-md text-lg flex items-center'><TiTickOutline className='flex-shrink-0 mr-3' /> {name} has been deleted from cart!</div>
-        )
-      }
-      {
-        notification && notification.type === "error" && (
-          <div className='sm:text-md text-lg flex items-center'><RiErrorWarningLine className='flex-shrink-0 mr-3'/>Error updating cart</div>
-        )
-      }
-    </div>
+    </AnimatePresence>
   )
 }

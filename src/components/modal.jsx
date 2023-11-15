@@ -12,6 +12,7 @@ import { LiaTimesSolid } from "react-icons/lia";
 import { fetchCart } from "@/store/cartSlice";
 import { useSession } from "next-auth/react";
 import AddCart from "./addCart";
+import { AnimatePresence, motion } from "framer-motion";
 
 export default function Modal({ id, setIds, amount}) {
   const { data } = useSession();
@@ -64,13 +65,27 @@ export default function Modal({ id, setIds, amount}) {
   return (
     mounted ?
      createPortal(
-     <>
+     <AnimatePresence>
       {!isLoading ? (
         <>
           <div
             className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden outline-none focus:outline-none"
           >
-            <div className="relative w-[70rem] my-6 mx-auto max-w-[85%] pt-16 sm:pt-0">
+            <motion.div
+            initial={{
+              y : -500,
+            }}
+            animate={{
+              y : 0,
+            }}
+            exit={{
+              y : -1000
+            }}
+            transition={{
+              type : "spring",
+              stiffness : 80
+            }}
+             className="relative w-[70rem] my-6 mx-auto max-w-[85%] pt-16 sm:pt-0">
               {/*content*/}
               <div className={`shadow-lg relative w-full bg-[#F7F7F7] outline-none focus:outline-none grid grid-cols-1 sm:grid-cols-2 ${ montserrat.className } mt-32 sm:mt-0`}>
                 <div
@@ -112,13 +127,23 @@ export default function Modal({ id, setIds, amount}) {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
-          <div 
-          className="fixed inset-0 z-40 overflow-y-auto bg-black opacity-50"
-          ></div>
+          <motion.div
+          key={"modal"}
+          initial={{
+            opacity: 0
+          }} 
+          animate={{
+            opacity: .5
+          }}
+          exit={{
+            opacity : 0
+          }}
+          className="fixed inset-0 z-40 overflow-y-auto bg-black"
+          ></motion.div>
         </>
       ) : null}
-    </>, document.body): null
+    </AnimatePresence>, document.body): null
   )
 }

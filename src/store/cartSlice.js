@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { collection, doc, getDoc, getDocs, getFirestore, query, queryEqual, setDoc, updateDoc, where } from "firebase/firestore";
 import { db } from "../../firebase";
 import { showNotification, hideNotification } from "./uiSlice";
+import { modalActions } from "./modalSlice";
 
 const initialCartState = {
   cart: [],
@@ -57,14 +58,19 @@ const cartSlice = createSlice({
 export const fetchCart = createAsyncThunk(
   "content/fetchCart",
   async (dat, {dispatch, getState, rejectWithValue }) => {
+    const { uid, item, type } = dat
     const previousCart = getState().cart.cart;
+    if (!uid) {
+      console.log("not logged in");
+      dispatch(modalActions.toggleAuth())
+      return;
+    }
     try {
       dispatch(hideNotification());
-      const { uid, item, type } = dat
       dispatch(cartAction.addToCart({item, type}));
       const carts = getState().cart.cart;
       const db = getFirestore();
-      const collectionRef = doc(db, 'carts', dat.uid);
+      const collectionRef = doc(db, 'carts', uid);
       await setDoc(collectionRef, { cart: carts }, { merge: true })
       dispatch(cartAction.cartName(item.name))
       dispatch(showNotification({
@@ -88,9 +94,14 @@ export const fetchCart = createAsyncThunk(
 export const clearedCart = createAsyncThunk(
   "content/fetchCart",
   async (data, {dispatch, getState, rejectWithValue }) => {
+    const { uid, id, name} = data;
     const previousCart = getState().cart.cart;
+    if (!uid) {
+      console.log("not logged in");
+      dispatch(modalActions.toggleAuth())
+      return;
+    }
     try {
-      const { uid, id, name} = data;
       dispatch(cartAction.clearCart(id));
       const carts = getState().cart.cart
       const db = getFirestore();
@@ -119,21 +130,23 @@ export const clearedCart = createAsyncThunk(
 export const fetchShoeData = (data) => {
         return async (dispatch) => {
             const fetchData = async () => {
-              try {
-                  if (data) {
-                    const q = doc(db, "carts", data?.user?.uid);
-                    const querySnapShot = await getDoc(q)
-                    if (querySnapShot.exists()){
-                      dispatch(cartAction.setCart(querySnapShot?.data().cart))
-                    } else {
-                      await setDoc(q, {
-                        cart : []
-                      })
+              if (navigator.onLine) {
+                  try {
+                    if (data) {
+                      const q = doc(db, "carts", data?.user?.uid);
+                      const querySnapShot = await getDoc(q)
+                      if (querySnapShot.exists()){
+                        dispatch(cartAction.setCart(querySnapShot?.data().cart))
+                      } else {
+                        await setDoc(q, {
+                          cart : []
+                        })
+                      }
                     }
-                  }
-              } catch (error) {
-                console.log(error)
-                throw new Error(error.message)
+                } catch (error) {
+                  console.log(error)
+                  throw error
+                }    
               }
             }
             fetchData()

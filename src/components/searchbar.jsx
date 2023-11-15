@@ -1,12 +1,16 @@
+"use client"
+
 import { montserrat } from '@/app/layout'
 import React from 'react'
 import { AiOutlineRight } from 'react-icons/ai'
 import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
-
+import { modalActions } from '@/store/modalSlice';
+import { useDispatch } from 'react-redux';
 
 export default function SearchBar({ minValue, maxValue }) {
+  const dispatch = useDispatch()
   const router = useRouter();
   const pathname =  usePathname()
   const [ search, setSearch ] = React.useState('');
@@ -15,8 +19,10 @@ export default function SearchBar({ minValue, maxValue }) {
     if (search.trim() === "") {
       return;
     }
-    console.log(search);
     router.push(`/search?searchTerm=${search}`)
+    setTimeout(() => {
+      dispatch(modalActions.toggleFilter())
+    }, 500);
   }
 
   return (

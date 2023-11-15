@@ -20,7 +20,6 @@ export default function ProductItem({ params }) {
   const product = useSelector(state=>state.product.product);
   const loading = useSelector(state=>state.product.isLoading);
   const error = useSelector(state=>state.product.error);
-  console.log(error);
   const amountRef = useRef();
 
   React.useEffect(()=>{

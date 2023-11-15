@@ -1,13 +1,14 @@
 "use client"
 
-import React, { useMemo } from 'react'
-import { oswald, montserrat } from '@/app/layout'
-import { LiaTimesSolid } from 'react-icons/lia'
-import { useDispatch, useSelector } from 'react-redux'
-import { modalActions } from '@/store/modalSlice'
-import SideCart from './sidecart'
-import { CgArrowTopRightR } from 'react-icons/cg'
-import Link from 'next/link'
+import React, { useMemo } from 'react';
+import { oswald, montserrat } from '@/app/layout';
+import { LiaTimesSolid } from 'react-icons/lia';
+import { useDispatch, useSelector } from 'react-redux';
+import { modalActions } from '@/store/modalSlice';
+import SideCart from './sidecart';
+import { CgArrowTopRightR } from 'react-icons/cg';
+import Link from 'next/link';
+import { AnimatePresence, motion } from 'framer-motion';
 
 export default function CartModal() {
   const dispatch = useDispatch();
@@ -24,17 +25,43 @@ export default function CartModal() {
   }, [carts])
 
   return (
-    <>
+    <AnimatePresence>
       {
         cartModal && (
-          <div 
+          <motion.div
+          key={"modal"}
+          initial={{
+            opacity: 0
+          }} 
+          animate={{
+            opacity: 1
+          }}
+          exit={{
+            opacity : 0
+          }} 
           onClick={()=>dispatch(modalActions.toggleCart())}
           className='fixed top-0 w-full h-screen bg-black bg-opacity-40' />
         )
       }
       {
+        cartModal &&
         (
-        <div className={`top-0 right-0 h-screen w-[33rem] max-w-full bg-white fixed z-[100000] transition-transform duration-200 ease-out ${cartModal ? 'translate-x-0' : 'translate-x-[33rem]'}`}>
+        <motion.div 
+        initial={{
+          x : 400
+        }}
+        animate={{
+          x : 0
+        }}
+        exit={{
+          x : 500
+        }}
+        transition={{
+          type : "spring",
+          ease : "easeOut",
+          stiffness : "200"
+        }}
+        className={`top-0 right-0 h-screen w-[33rem] max-w-full bg-white fixed z-[100000] transition-transform duration-200 ease-out`}>
           <div className='border-b border-[#DDDDDD] flex items-center justify-between p-4'>
             <h1 className={`${montserrat.className} text-textGray text-light `}>Shopping Cart</h1>
             <LiaTimesSolid 
@@ -47,18 +74,17 @@ export default function CartModal() {
             <p className={`${montserrat.className} text-textGray text-sm tracking-wide`}>No products in cart</p>
           </div>
           }
-
           {
             carts && carts.length > 0 && (
               <>
                 <div className='w-full overflow-auto h-[32rem] relative'>
-                { 
-                  isLoading && (
-                    <div className='fixed bg-textGray h-full w-full flex items-center justify-center bg-opacity-25 '>
-                      <img src="/spinner.svg"></img>
-                    </div>
-                  )
-                }
+                  { 
+                    isLoading && (
+                      <div className='absolute bg-textGray h-full w-full flex items-center justify-center bg-opacity-25 '>
+                        <img src="/spinner.svg"/>
+                      </div>
+                    )
+                  }
                   {
                     carts.map(cart=>(
                       <SideCart 
@@ -75,12 +101,14 @@ export default function CartModal() {
               </>
             )
           }
-          <div className={`absolute w-full px-4 bottom-4 ${montserrat.className}`}>
+          <div className={`absolute w-full px-4 bottom-4 ${montserrat.className} bg-white`}>
             {
               carts.length === 0 ? (
-                <button className='btn'>Continue Shopping</button>
+                <div className="flex justify-center">
+                  <Link href="/products" className='btn text-center'>Continue Shopping</Link>
+                </div>
               ) : (
-                <div className='flex flex-col space-y-3 text-textGray text-light'>
+                <div className='flex flex-col space-y-3 text-textGray '>
                   <div className='border-t border-b py-3 flex justify-between items-center'>
                     <p>Subtotal:</p>
                     <p>${ totalPrice?.toFixed(2) }</p>
@@ -95,9 +123,9 @@ export default function CartModal() {
               )
             }
           </div>
-        </div>
+        </motion.div>
         )
       }
-    </>
+    </AnimatePresence>
   )
 }

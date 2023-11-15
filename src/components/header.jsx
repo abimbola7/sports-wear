@@ -11,6 +11,7 @@ import { fetchShoeData } from '@/store/cartSlice'
 import { hamburgerToggler } from '@/store/uiSlice'
 import {signIn, signOut, useSession } from 'next-auth/react'
 import { useDispatch, useSelector } from 'react-redux'
+import { motion } from 'framer-motion'
 
 
 export default function Header() {
@@ -59,12 +60,18 @@ export default function Header() {
       className='flex items-center justify-between px-4 py-4 mx-auto max-w-7xl md:px-2'
       >
       {/* left */}
-       <div className="flex items-center space-x-10">
+       <motion.div
+        className="flex items-center space-x-10">
         <Link 
         href="/" 
         className='text-2xl font-bold'>
           SPARTA
-          <span className='text-darkOrange'>X</span>
+          <motion.span
+          animate={{
+            rotate : 360,
+            x : 200
+          }} 
+          className='text-darkOrange'>X</motion.span>
         </Link>
         <ul className='hidden space-x-6 md:inline-flex'>
           {
@@ -82,24 +89,30 @@ export default function Header() {
             ))
           }
         </ul>
-       </div> 
+       </motion.div> 
 
        {/* right */}
        {
           <div className='items-center hidden space-x-4 font-medium text-darkOrange md:inline-flex'>
               {/* <AiOutlineSearch className="icon"/> */}
-              <p>${totalPrice.toFixed(2)}</p>
-              <div className='relative z-1'>
-                <div className='absolute px-1 text-xs text-white rounded-full pointer-events-none -top-1 left-4 bg-darkOrange'>{ totaAmount }</div>
-                <PiShoppingCartFill 
-                onClick={()=>dispatch(modalActions.toggleCart())}
-                className='text-2xl cursor-pointer text-darkOrange'/>
-              </div>
+              {
+                data && (
+                  <>
+                    <p>${totalPrice.toFixed(2)}</p>
+                    <div className='relative z-1'>
+                      <div className='absolute px-1 text-xs text-white rounded-full pointer-events-none -top-1 left-4 bg-darkOrange'>{ totaAmount }</div>
+                      <PiShoppingCartFill 
+                      onClick={()=>dispatch(modalActions.toggleCart())}
+                      className='text-2xl cursor-pointer text-darkOrange'/>
+                    </div>
+                  </>    
+                )
+              }
               {
                 !data ? (
                   <CgProfile 
                   onClick={signIn}
-                  className='icon'/>
+                  className='icon !text-3xl'/>
                 ) : (
                   <img 
                   onClick={signOut}

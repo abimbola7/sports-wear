@@ -8,6 +8,7 @@ import CartModal from '@/components/cartmodal'
 import CartNotification from '@/components/cartnotification'
 import SideBars from '@/components/sidebars'
 import Filter from '@/components/filter'
+import AuthModal from '@/components/authmodal'
 
 const inter = Inter({ subsets: ['latin'] })
 export const oswald = Oswald({
@@ -39,6 +40,7 @@ export default function RootLayout({ children }) {
             <SideBars />
             <Header/>
             <CartNotification />
+            <AuthModal/>
             {/* <Modal /> */}
             {children}
 

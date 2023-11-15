@@ -5,12 +5,14 @@ import { hamburgerToggler } from '@/store/uiSlice'
 import { LiaTimesSolid } from "react-icons/lia"
 import Link from 'next/link'
 import { montserrat } from '@/app/layout'
+import { signIn, signOut, useSession } from 'next-auth/react'
 import { usePathname} from 'next/navigation'
 
 export default function SideBars() {
+  const { data } = useSession();
   const dispatch = useDispatch();
-  const pathName = usePathname()
-  const hamburgerState = useSelector(state=>state.ui.hamburgerIsToggled) 
+  const pathName = usePathname();
+  const hamburgerState = useSelector(state=>state.ui.hamburgerIsToggled);
   return (
     <div className={`${!hamburgerState && "hidden"} w-full h-screen bg-white fixed z-[100000] md:hidden`}>
       <div className="py-4 flex items-center justify-end px-4">
@@ -42,6 +44,11 @@ export default function SideBars() {
           </li>
         ))
         }
+        <li
+        onClick={data ? signOut : signIn}
+        className={`py-2 hover:text-darkOrange capitalize cursor-pointer`}>
+          {data ? "Sign Out" : "Sign In"}
+        </li>
       </ul>
     </div>
   )

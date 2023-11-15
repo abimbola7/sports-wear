@@ -6,7 +6,6 @@ export const useFetchType = (data) => {
   const [isLoading, setIsLoading] = React.useState(true)
   const [error, setError] = React.useState(null)
   const [products, setProducts] = React.useState(null);
-  console.log(data)
   const fetchData  = async () => {
     setError(null);
     setIsLoading(true);
@@ -33,7 +32,6 @@ export const useFetchType = (data) => {
       setProducts(newData);
 
     } catch(error) {
-      console.log(error)
       setError("Something went wrong");
     } finally {
       setIsLoading(false)

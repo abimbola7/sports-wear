@@ -6,36 +6,6 @@ import { collection, getDocs, onSnapshot, orderBy, query, where } from 'firebase
 import { db } from '../../firebase'
 
 export default function Category() {
-  // React.useEffect(()=> {
-  //   const fetchData  = async () => {
-  //     await getDocs(collection(db, "products"))
-  //     .then((querySnaphot)=>{
-  //       const newData = querySnaphot.docs.map(doc=>(
-  //         {
-  //           ...doc.data(), id:doc.id
-  //         }
-  //       ))
-  //       console.log(newData)
-  //     })
-  //   }
-  //   fetchData();
-  // }, [])
-
-  // React.useEffect(()=> {
-  //   const fetchMenData  = async () => {
-  //     const q = query(collection(db, "products"), where("latest", "==", true));
-  //     await getDocs(q)
-  //     .then(querySnaphot => {
-  //       const newData = querySnaphot.docs.map(doc=>(
-  //         {
-  //           ...doc.data(), id:doc.id
-  //         }
-  //       ))
-  //       console.log(newData)
-  //     })
-  //   }
-  //   fetchMenData();
-  // }, [])
   return (
     <section className="max-w-7xl mx-auto mt-24 px-4">
     <h2 className={`${oswald.className} font-semibold text-xl mb-10 text-customBlack`}>Shop by Category</h2>
