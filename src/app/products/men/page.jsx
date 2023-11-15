@@ -1,13 +1,8 @@
 "use client"
 import Card from '@/components/card';
 import RowCard from '@/components/row-card';
-import { collection, getDocs, query, where } from 'firebase/firestore';
 import Link from 'next/link';
 import React from 'react'
-import { FaThList } from 'react-icons/fa';
-import { HiViewGrid } from 'react-icons/hi';
-import { VscSettings } from 'react-icons/vsc';
-import { db } from '../../../../firebase';
 import { montserrat, oswald } from '@/app/layout';
 import { usePathname } from 'next/navigation';
 import { useFetchType } from '@/hooks/api';
