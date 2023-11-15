@@ -3,7 +3,7 @@
 
 
 import React, { forwardRef } from 'react'
-import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
+import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai"
 
 const CartBtn = React.forwardRef(
   (props, ref) => {
