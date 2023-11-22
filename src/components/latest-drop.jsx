@@ -12,12 +12,10 @@ export default function LatestDrop() {
   const latest = useSelector(state=>state.products.latest);
   const isLoading  = useSelector(state=>state.products.isLoading);
   const error  = useSelector(state=>state.products.error);
-  console.log(isLoading)
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-    console.log("ee")
-    dispatch(fetchLatest("dd"));
+    dispatch(fetchLatest());
   }, [dispatch]);
   
 

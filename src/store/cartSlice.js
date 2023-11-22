@@ -61,7 +61,6 @@ export const fetchCart = createAsyncThunk(
     const { uid, item, type } = dat
     const previousCart = getState().cart.cart;
     if (!uid) {
-      console.log("not logged in");
       dispatch(modalActions.toggleAuth())
       return;
     }
@@ -97,7 +96,6 @@ export const clearedCart = createAsyncThunk(
     const { uid, id, name} = data;
     const previousCart = getState().cart.cart;
     if (!uid) {
-      console.log("not logged in");
       dispatch(modalActions.toggleAuth())
       return;
     }
@@ -144,7 +142,6 @@ export const fetchShoeData = (data) => {
                       }
                     }
                 } catch (error) {
-                  console.log(error)
                   throw error
                 }    
               }

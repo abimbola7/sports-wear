@@ -8,7 +8,6 @@ import { modalActions } from '@/store/modalSlice';
 export default function Editbar({ setLayout, layout }) {
   const dispatch = useDispatch();
   const isFilter = useSelector(state=>state.modal.filterIsToggled)
-  console.log(isFilter)
   return (
     <div
       className='flex justify-between items-center text-textGray my-10 sticky top-0 z-[10]'

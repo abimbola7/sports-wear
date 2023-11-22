@@ -13,7 +13,6 @@ export default function Products() {
   const reduxProducts = useSelector(state=>state.products.products);
   const reduxIsLoading = useSelector(state=>state.products.isLoading);
   const reduxError = useSelector(state=>state.products.error);
-  console.log(reduxIsLoading)
   const dispatch = useDispatch();
   const [ layout, setLayout ] = React.useState('grid');
 

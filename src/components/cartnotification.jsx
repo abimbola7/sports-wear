@@ -7,12 +7,14 @@ import { TiTickOutline } from 'react-icons/ti'
 import { useDispatch, useSelector } from 'react-redux'
 import { RiErrorWarningLine } from "react-icons/ri"
 import { easeOut, motion, AnimatePresence } from 'framer-motion'
+import { usePathname } from 'next/navigation'
 
 export default function CartNotification() {
+  const currentPath = usePathname();
   const notification = useSelector(state=>state.ui.notification);
   const name = useSelector(state=>state.cart.cartName)
   const [ visible, setVisible ]= React.useState(false);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   React.useEffect(()=>{
     if (notification) {
       setVisible(true)
@@ -32,7 +34,7 @@ export default function CartNotification() {
   return (
     <AnimatePresence>
       {
-        visible && (
+        visible && currentPath !== "/cart" && (
           <motion.div
           initial={{
             x : "-100%"

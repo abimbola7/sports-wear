@@ -6,7 +6,6 @@ export const useSearch = (data) => {
   const [isLoading, setIsLoading] = React.useState()
   const [error, setError] = React.useState(null)
   const [products, setProducts] = React.useState(null)
-  console.log(+data.maxValue)
 
   const fetchSearchData  = async () => {
     setError(null);
@@ -35,11 +34,9 @@ export const useSearch = (data) => {
           ...doc.data(),
           id: doc.id
         }));
-        console.log(tagsData)
         setProducts([...nameData, ...categoryData, ...tagsData]);
       }
     } catch (error) {
-      console.log(error)
       setError(error.message)
       // return rejectWithValue(error.message)
     }finally {
@@ -52,7 +49,6 @@ export const useSearch = (data) => {
     memoizedFetchData()
   }, [memoizedFetchData])
 
-  console.log(isLoading)
   return {
     isLoading,
     error,

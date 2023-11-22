@@ -2,16 +2,14 @@
 import React from 'react'
 import "./banner.css"
 import { montserrat, oswald } from '@/app/layout'
-import { db } from '../../firebase'
-import { collection, getDocs, onSnapshot, orderBy, query } from 'firebase/firestore'
 
 const Banner = () => {
   return (
     <section>
       <div
-      className='w-[90%] h-[400px] lg:h-[450px] banner mx-auto py-16 px-16 mb-4'
+      className='w-[90%] h-fit sm:h-[400px] lg:h-[450px] banner mx-auto p-8 sm:p-16 mb-4'
       >
-        <h2 className={`text-3xl font-bold text-white ${montserrat.className}`}>
+        <h2 className={`text-3xl font-bold text-white ${montserrat.className} text-center md:text-left`}>
           SPARTA
           <span className='text-darkOrange'>X</span>
         </h2>

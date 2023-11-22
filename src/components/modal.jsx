@@ -52,7 +52,6 @@ export default function Modal({ id, setIds, amount}) {
         const eventRef = doc(db, 'products', id);
         await getDoc(eventRef)
         .then(querySnaphot => {
-          console.log(querySnaphot.id)
           setProductData({...querySnaphot.data(), id:querySnaphot.id})
           setIsLoading(false);
         }) 

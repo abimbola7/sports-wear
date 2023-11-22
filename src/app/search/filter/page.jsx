@@ -16,7 +16,6 @@ export default function FilterTerm({ params, searchParams }) {
   const [ layout, setLayout ] = React.useState('grid');
   const { minValue, maxValue, searchTerm } = searchParams
   const { isLoading, products, error } = useSearch({minValue, maxValue, searchTerm});
-  console.log(isLoading)
   return (
     <main
     className='min-h-screen mt-24 max-w-[92rem] mx-auto text-customBlack px-5 '

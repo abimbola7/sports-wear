@@ -21,7 +21,6 @@ const productSlice = createSlice({
     builder.addCase(fetchProduct.fulfilled, (state, action) => {
       state.isLoading = false;
       state.product = action.payload
-      console.log(state.product)
 
     });
     builder.addCase(fetchProduct.rejected, (state, action) => {
@@ -37,7 +36,6 @@ export const fetchProduct = createAsyncThunk(
     try {
       const eventRef = doc(db, 'products', id);
       const querySnapshot = await getDoc(eventRef)
-      console.log(querySnapshot.id)
       return {...querySnapshot.data(), id: querySnapshot.id} 
     } catch (error) {
       return rejectWithValue({ message : "Something went wrong" })

@@ -51,7 +51,6 @@ export default function Header() {
     dispatch(fetchShoeData(data))
   }, [dispatch, data?.user?.uid])
 
-  // console.log(data)
   return (
     <header 
     className={`${montserrat.className} font-extrabold z-[100000] transition-colors duration-500 !bg-transparent`}>
@@ -117,7 +116,7 @@ export default function Header() {
                   <img 
                   onClick={signOut}
                   src={data?.user?.image} 
-                  alt='' 
+                  alt='avatar' 
                   className='flex-shrink-0 h-8 rounded-full cursor-pointer'/>
                 )
               }
