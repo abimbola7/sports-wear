@@ -3,12 +3,12 @@ import { collection, getDoc, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../firebase";
 
 const initialProductsState = {
-  products : [],
+  products : null,
   latest : [],
   men : [],
   women : [],
   search : [],
-  isLoading : false,
+  isLoading : true,
   error : null
 }
 
@@ -18,7 +18,8 @@ const productsSlice = createSlice({
   reducers : {},
   extraReducers : (builder) => {
     builder.addCase( fetchProducts.pending, (state, action) => {
-      state.isLoading = true
+      state.error = null;
+      state.isLoading = true;
     });
     builder.addCase( fetchProducts.fulfilled, (state, action) => {
       state.isLoading = false;
@@ -26,11 +27,12 @@ const productsSlice = createSlice({
     });
     builder.addCase( fetchProducts.rejected, (state, action) => {
       state.isLoading = false;
+      state.error = action.payload
     });
 
     builder.addCase( fetchLatest.pending, (state, action) => {
-      state.isLoading = true;
       state.error = null;
+      state.isLoading = true;
     });
     builder.addCase( fetchLatest.fulfilled, (state, action) => {
       state.isLoading = false;
@@ -59,15 +61,24 @@ const productsSlice = createSlice({
 
 export const fetchProducts = createAsyncThunk(
   'products/fetchProducts',
-  async () => {
-    const q = collection(db, "products");
-    const querySnapshot  = await getDocs(q)
-    const newData = querySnapshot.docs.map(doc=>(
-      {
-        ...doc.data(), id:doc.id
-      })
-    )
-    return newData;
+  async (dat, { rejectWithValue }) => {
+    try {
+      const q = collection(db, "products");
+      const querySnapshot  = await getDocs(q)
+      // console.log(querySnapshot)
+      if (querySnapshot.empty) { 
+        throw new Error("Something went wrong")
+      }else {
+        const newData = querySnapshot.docs.map(doc => ({
+          ...doc.data(),
+          id: doc.id
+        }));
+        return newData;
+      }
+    } catch (error) {
+      // console.log(error);
+      return rejectWithValue("Something went wrong");
+    }
   }
 )
 
