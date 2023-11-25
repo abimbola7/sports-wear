@@ -78,7 +78,7 @@ export default function ProductItem({ params }) {
                   </div>
 
                   <div>
-                    <div className={`flex text-textGray ${montserrat.className} text-sm capitalize`}>
+                    <div className={`flex text-textGray ${montserrat.className} text-sm capitalize truncate`}>
                       <Link href={"/"} className="mr-1">Home </Link> &nbsp; {"/"} &nbsp;
                       {
                         product.category?.map(prod=>(
@@ -89,7 +89,7 @@ export default function ProductItem({ params }) {
                           </>
                         ))
                       }
-                      <span>{ product.name }</span>
+                      <span className='l line-clamp-1 truncate'>{ product.name }</span>
                     </div>
 
                     <div className={`flex text-textGray ${montserrat.className} text-md capitalize mt-5`}>

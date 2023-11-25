@@ -12,19 +12,19 @@ export default function Category() {
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
       <CategoryItems 
       src="https://firebasestorage.googleapis.com/v0/b/sport-wear-store.appspot.com/o/sports-wear-store-category-img-1.jpg?alt=media&token=846f8677-ffcb-4d2b-ad8c-7848a5324c1a"
-      type={"CLOTHING"}
+      type={"clothing"}
        />
       <CategoryItems 
       src="https://firebasestorage.googleapis.com/v0/b/sport-wear-store.appspot.com/o/sports-wear-store-category-img-2.jpg?alt=media&token=c272ec08-a68d-4c1d-8c6c-ef0f127f27cf"
-      type={"GEARS"}
+      type={"gears"}
       />
       <CategoryItems 
       src="https://firebasestorage.googleapis.com/v0/b/sport-wear-store.appspot.com/o/sports-wear-store-category-img-3.jpg?alt=media&token=3b3b8b1e-9b9a-4b9e-9b9a-9b9a9b9a9b9a"
-      type={"SHOES"}
+      type={"shoes"}
       />
       <CategoryItems 
       src="https://firebasestorage.googleapis.com/v0/b/sport-wear-store.appspot.com/o/sports-wear-store-category-img-4.jpg?alt=media&token=9b9a9b9a-9b9a-9b9a-9b9a-9b9a9b9a9b9a"
-      type={"SPORTSTYLE"}
+      type={"sportstyle"}
       />
     </div>
     </section>

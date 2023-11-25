@@ -92,7 +92,7 @@ export default function Modal({ id, setIds, amount}) {
                 className="absolute p-2 cursor-pointer bg-[#F7F7F7] rounded-full text-sm -right-3 -top-4 shadow-2xl">
                   <LiaTimesSolid />
                 </div>
-                <div className="border">
+                <div className="">
                   <Image
                   src={productData.imageUrl}
                   alt="product"
@@ -102,7 +102,7 @@ export default function Modal({ id, setIds, amount}) {
                   blurDataURL='/spinner.svg'
                   />
                 </div>
-                <div className="flex flex-col p-6 space-y-2 border text-customBlack">
+                <div className="flex flex-col p-6 space-y-2  text-customBlack">
                   <p>{ productData.category }</p>
                   <h1 className={`${ oswald.className } font-medium text-3xl`}>{ productData.name }</h1>
                   <p className="text-2xl font-bold text-textGray">${ productData.price.toFixed(2) }</p>

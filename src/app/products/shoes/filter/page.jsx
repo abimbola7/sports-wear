@@ -6,10 +6,10 @@ import React from 'react'
 export default function FilterMen({ params, searchParams }) {
   const [ layout, setLayout ] = React.useState('grid');
   const { minValue, maxValue } = searchParams
-  const { isLoading, products, error, memoizedFetchData } = useFetchType({type: "filter", minValue, maxValue, cat : "Men"});
+  const { isLoading, products, error, memoizedFetchData } = useFetchType({type: "filter", minValue, maxValue, cat : "Shoes"});
   return (
     <ProductType
-    type="Men"
+    type="Shoes"
     isLoading={isLoading}
     error={error}
     products={products}

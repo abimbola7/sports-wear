@@ -42,7 +42,7 @@ export default function LatestDrop() {
           ) : (
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-items-center">
               {
-                latest.length > 0 && latest.map(latest=>(
+                latest.length > 0 && latest.slice(0, 4).map(latest=>(
                   <Card 
                   key={latest.id}
                   id={latest.id}
