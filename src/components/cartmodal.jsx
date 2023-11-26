@@ -51,7 +51,7 @@ export default function CartModal() {
           x : 400
         }}
         animate={{
-          x : 0
+          x : -1
         }}
         exit={{
           x : 500
@@ -77,11 +77,13 @@ export default function CartModal() {
           {
             carts && carts.length > 0 && (
               <>
-                <div className='w-full overflow-auto h-[32rem] relative'>
+                <div className='w-full overflow-y-auto h-[32rem] relative'>
                   { 
                     isLoading && (
-                      <div className='fixed bg-textGray h-full w-full bg-opacity-25'>
-                        <img src="/spinner.svg" className='mx-auto my-64 w-20'/>
+                      <div className='fixed h-full w-full bg-textGray bg-opacity-25 flex items-center justify-center'>
+                        <div className=''>
+                          <img src="/spinner.svg" className="!-mt-56"/>
+                        </div>
                       </div>
                     )
                   }
@@ -101,7 +103,7 @@ export default function CartModal() {
               </>
             )
           }
-          <div className={`absolute w-full px-4 bottom-4 ${montserrat.className} bg-white`}>
+          <div className={`absolute w-full px-4 bottom-1 ${montserrat.className} bg-white`}>
             {
               carts.length === 0 ? (
                 <div className="flex justify-center">
