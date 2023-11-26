@@ -13,6 +13,7 @@ import { fetchCart } from "@/store/cartSlice";
 import { useSession } from "next-auth/react";
 import AddCart from "./addCart";
 import { AnimatePresence, motion } from "framer-motion";
+import Link from "next/link";
 
 export default function Modal({ id, setIds, amount}) {
   const { data } = useSession();
@@ -103,7 +104,25 @@ export default function Modal({ id, setIds, amount}) {
                   />
                 </div>
                 <div className="flex flex-col p-6 space-y-2  text-customBlack">
-                  <p>{ productData.category }</p>
+                  <p>{
+                        productData.category?.map((prod, i)=>(
+                          <>
+                            <Link 
+                            className='hover:text-darkOrange'
+                            key={prod}
+                            href={`/products/${prod.toLowerCase()}`}>
+                            {prod}
+                            {productData.category.length - 1 === i ? 
+                            "" : 
+                            <span>
+                            {","} &nbsp;
+                            </span> 
+                            }
+                            </Link>
+                          </>
+                        ))
+                      }
+                    </p>
                   <h1 className={`${ oswald.className } font-medium text-3xl`}>{ productData.name }</h1>
                   <p className="text-2xl font-bold text-textGray">${ productData.price.toFixed(2) }</p>
                   <p>{ productData.description }</p>
@@ -115,7 +134,27 @@ export default function Modal({ id, setIds, amount}) {
                   <AddCart onAdd={addToCart}/>
                   </div>
                   <div className="flex flex-col pt-2 text-sm border-t sm:flex-row sm:space-x-3 sm:items-center">
-                    <div className="">Category: {" "} <span>{ productData.category }</span></div>
+                    <div className="">
+                      Category: {" "} 
+                      <span>{
+                        productData.category?.map((prod, i)=>(
+                          <>
+                            <Link 
+                            className='hover:text-darkOrange'
+                            key={prod}
+                            href={`/products/${prod.toLowerCase()}`}>
+                            {prod}
+                            {productData.category.length - 1 === i ? 
+                            "" : 
+                            <span>
+                            {","} &nbsp;
+                            </span> 
+                            }
+                            </Link>
+                          </>
+                        ))
+                      }</span>
+                      </div>
                     <div>
                       Tags: {" "} 
                       <span>{ productData.tags.join(", ") }</span>

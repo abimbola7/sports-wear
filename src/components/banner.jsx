@@ -2,6 +2,7 @@
 import React from 'react'
 import "./banner.css"
 import { montserrat, oswald } from '@/app/layout'
+import Link from 'next/link'
 
 const Banner = () => {
   return (
@@ -20,9 +21,11 @@ const Banner = () => {
             <h1 className={`font-semibold text-5xl ${oswald.className}`}>Street Ready</h1>
             <p className={`mt-10 ${montserrat.className}`}>lorem ipsum lil uzi vert, pharrel williams, dr dre, tyler, the creator, brent fawaz, shakira, linkin park</p>
           </div>
-          <button className={`px-8 py-4 rounded-3xl text-xs bg-white text-black w-fit font-semibold ${montserrat.className} mt-12 lg:mt-24`}>
+          <Link 
+          href={`/products/shoes`}
+          className={`px-8 py-4 rounded-3xl text-xs bg-white text-black w-fit font-semibold ${montserrat.className} mt-12 lg:mt-24`}>
             SHOP NOW
-          </button>
+          </Link>
         </div>
       </div>
     </section>

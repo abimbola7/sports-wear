@@ -2,6 +2,7 @@ import Image from 'next/image'
 import React from 'react'
 import "./fitness.css"
 import { oswald, montserrat } from '@/app/layout'
+import Link from 'next/link'
 
 export default function Fitness() {
   return (
@@ -31,9 +32,11 @@ export default function Fitness() {
         <div className="w-full md:max-w-md flex flex-col space-y-6 text-center md:text-right items-center md:items-end md:pr-12 mb-14 mt-10 md:mt-0">
           <h1 className={`${oswald.className} text-5xl`}>Fitness Ready</h1>
           <p className={`${montserrat.className}`}>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fugiat, beatae iusto autem.</p>
-          <button className={`px-8 py-4 rounded-3xl text-sm bg-white text-black w-fit font-semibold ${montserrat.className} text-center`}>
+          <Link 
+          href={`/products/gears`}
+          className={`px-8 py-4 rounded-3xl text-sm bg-white text-black w-fit font-semibold ${montserrat.className} text-center`}>
             SHOP NOW
-          </button>
+          </Link>
         </div>
       </div>
       </div>

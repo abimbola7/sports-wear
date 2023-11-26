@@ -99,7 +99,7 @@ export default function ProductItem({ params }) {
                             <Link 
                             className='hover:text-darkOrange'
                             key={prod}
-                            href={prod.toLowerCase()}>
+                            href={`/products/${prod.toLowerCase()}`}>
                             {prod}
                             {product.category.length - 1 === i ? 
                             "" : 
