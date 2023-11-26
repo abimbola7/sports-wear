@@ -46,6 +46,9 @@ export default function Filter() {
     `${pathname === "/products" ? "/products/filter" :
         pathname === "/products/men" ? "/products/men/filter" :
         pathname === "/products/women" ? "/products/women/filter" :
+        pathname === "/products/clothing" ? "/products/clothing/filter" :
+        pathname === "/products/shoes" ? "/products/shoes/filter" :
+        pathname === "/products/gears" ? "/products/gears/filter" :
         pathname ===  "/search" ? `/search/filter?searchTerm=${searchTerm}` :
         pathname
       }${pathname === "/search" ? "&" : pathname === "/search/filter" ? `?searchTerm=${searchTerm}&`: "?"}minValue=${minValue}&maxValue=${maxValue}`)

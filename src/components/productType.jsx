@@ -27,7 +27,9 @@ export default function ProductType({ isLoading, error, products, memoizedFetchD
         <h1 className={`${oswald.className} font-medium text-4xl !mb-3`}>Active Filter</h1>
         <span className='font-light'>Min ${minValue}</span>
         <span  className='ml-3 font-light'>Max ${maxValue}</span>
-        <Link href="/products/men" className="bg-darkOrange py-3 text-white block px-3 rounded-3xl w-fit hover:bg-opacity-50">Cancel Filter</Link>
+        <button 
+        onClick={()=>router.back()}
+        className="bg-darkOrange py-3 text-white block px-3 rounded-3xl w-fit hover:bg-opacity-50">Cancel Filter</button>
       </div>
       )
     }
