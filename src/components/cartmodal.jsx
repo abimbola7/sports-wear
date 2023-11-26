@@ -80,8 +80,8 @@ export default function CartModal() {
                 <div className='w-full overflow-auto h-[32rem] relative'>
                   { 
                     isLoading && (
-                      <div className='absolute bg-textGray h-full w-full flex items-center justify-center bg-opacity-25 '>
-                        <img src="/spinner.svg"/>
+                      <div className='fixed bg-textGray h-full w-full bg-opacity-25'>
+                        <img src="/spinner.svg" className='mx-auto my-64 w-20'/>
                       </div>
                     )
                   }
