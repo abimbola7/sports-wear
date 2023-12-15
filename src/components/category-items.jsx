@@ -15,6 +15,7 @@ export default function CategoryItems({ src, title, link, type }) {
     className='h-[200px] md:h-[300px] lg:h-[550px] relative'
     >
       <Image
+      quality={100}
       src={src}
       alt={"alt"}
       className="object-cover object-center w-full "
@@ -28,10 +29,10 @@ export default function CategoryItems({ src, title, link, type }) {
           whileHover={{
             scale: 1.2
           }}
-          className='px-8 py-3 rounded-3xl text-sm bg-white text-black w-fit font-semibold group uppercase'
+          className='px-8 py-3 text-sm font-semibold text-black uppercase bg-white rounded-3xl w-fit group'
           >
           {type}
-          <BsArrowRight className='inline-flex ml-1 pb-1 text-2xl'/>
+          <BsArrowRight className='inline-flex pb-1 ml-1 text-2xl'/>
           </motion.button>
         </Link>
       </div>

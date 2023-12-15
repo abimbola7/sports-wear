@@ -6,6 +6,7 @@ import TableCart from './tablecart';
 import CartLoading from './loading';
 import ColCart from './colcart';
 import Notify from './notification';
+import Link from 'next/link';
 
 export default function CardLayout() {
   const cartData = useSelector(state=>state.cart.cart);
@@ -33,7 +34,7 @@ export default function CardLayout() {
               <div className={`border ${isLoading && 'p-4'} mt-14 md:mt-0`}>
                 {
                   isLoading ? (
-                      <div className='flex flex-col w-full space-y-4 animate-pulse cursor-wait'>
+                      <div className='flex flex-col w-full space-y-4 cursor-wait animate-pulse'>
                         <div className='w-full h-10 bg-gray-500 rounded-sm'></div>
                         <div className='w-full h-4 bg-gray-500 rounded-sm'></div>
                         <div className='w-full h-4 bg-gray-500 rounded-sm'></div>
@@ -49,14 +50,14 @@ export default function CardLayout() {
                       </div>
                       <div className={`p-4 ${montserrat.className}`}>
                         <div className='border-b'>
-                          <div className='flex p-3 justify-between items-center text-md'>
+                          <div className='flex items-center justify-between p-3 text-md'>
                             <p>Subtotal</p>
                             <p>${ totalPrice?.toFixed(2) }</p>
                           </div>
                         </div>
 
                         <div className='border-b'>
-                          <div className='flex p-3 justify-between items-center text-md'>
+                          <div className='flex items-center justify-between p-3 text-md'>
                             <p>Total</p>
                             <p>${ totalPrice?.toFixed(2) }</p>
                           </div>
@@ -64,7 +65,7 @@ export default function CardLayout() {
 
                         <div className={`p-3 ${montserrat.className} flex flex-col space-y-3`}>
                           <p>Have a coupon?</p>
-                          <button className='flex-1 py-3 sm:py-5 text-lg font-semibold text-white bg-darkOrange rounded-3xl'>BUY NOW</button>
+                          <Link href="/checkout"  className='flex-1 py-3 text-lg font-semibold text-white sm:py-5 bg-darkOrange rounded-3xl'>BUY NOW</Link>
                         </div>
                       </div>
                     </div>

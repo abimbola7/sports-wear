@@ -80,7 +80,7 @@ export default function CartModal() {
                 <div className='w-full overflow-y-auto h-[32rem] relative'>
                   { 
                     isLoading && (
-                      <div className='fixed h-full w-full bg-textGray bg-opacity-25 flex items-center justify-center'>
+                      <div className='fixed flex items-center justify-center w-full h-full bg-opacity-25 bg-textGray'>
                         <div className=''>
                           <img src="/spinner.svg" className="!-mt-56"/>
                         </div>
@@ -107,11 +107,11 @@ export default function CartModal() {
             {
               carts.length === 0 ? (
                 <div className="flex justify-center">
-                  <Link href="/products" className='btn text-center'>Continue Shopping</Link>
+                  <Link href="/products" className='text-center btn'>Continue Shopping</Link>
                 </div>
               ) : (
                 <div className='flex flex-col space-y-3 text-textGray '>
-                  <div className='border-t border-b py-3 flex justify-between items-center'>
+                  <div className='flex items-center justify-between py-3 border-t border-b'>
                     <p>Subtotal:</p>
                     <p>${ totalPrice?.toFixed(2) }</p>
                   </div>

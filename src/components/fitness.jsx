@@ -12,6 +12,7 @@ export default function Fitness() {
       >
       <div className='md:col-span-3'>
       <Image
+        quality={100}
         src={"https://firebasestorage.googleapis.com/v0/b/sport-wear-store.appspot.com/o/sports-wear-store-banner-img-1.jpg?alt=media&token=78f02b85-05e2-464f-9b0c-24caca7a626a"}
         alt={"alt"}
         className="object-cover object-center w-full "
@@ -21,6 +22,7 @@ export default function Fitness() {
       </div>
       <div className='md:col-span-3'>
         <Image
+          quality={100}
           src={"https://firebasestorage.googleapis.com/v0/b/sport-wear-store.appspot.com/o/sports-wear-store-banner-img-2.jpg?alt=media&token=78f02b85-05e2-464f-9b0c-24caca7a626a"}
           alt={"alt"}
           className="object-cover object-center w-full "
@@ -28,8 +30,8 @@ export default function Fitness() {
           height={200}
         /> 
       </div>
-      <div className='w-full col-span-4 flex md:items-end text-white md:justify-end justify-center items-center'>
-        <div className="w-full md:max-w-md flex flex-col space-y-6 text-center md:text-right items-center md:items-end md:pr-12 mb-14 mt-10 md:mt-0">
+      <div className='flex items-center justify-center w-full col-span-4 text-white md:items-end md:justify-end'>
+        <div className="flex flex-col items-center w-full mt-10 space-y-6 text-center md:max-w-md md:text-right md:items-end md:pr-12 mb-14 md:mt-0">
           <h1 className={`${oswald.className} text-5xl`}>Fitness Ready</h1>
           <p className={`${montserrat.className}`}>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fugiat, beatae iusto autem.</p>
           <Link 

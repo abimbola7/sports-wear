@@ -57,7 +57,10 @@ export default function Card({ imageUrl, name, price, id, amount }) {
             className='cursor-pointer'
             onClick={()=>router.push(`/products/${id}`)}
             >
-              <Image 
+              <Image
+              loading='lazy' 
+              quality={100}
+              priority={true}
               src={imageUrl}
               alt="products"
               width={300}
