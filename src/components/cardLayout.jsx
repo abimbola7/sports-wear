@@ -65,7 +65,7 @@ export default function CardLayout() {
 
                         <div className={`p-3 ${montserrat.className} flex flex-col space-y-3`}>
                           <p>Have a coupon?</p>
-                          <Link href="/checkout"  className='flex-1 py-3 text-lg font-semibold text-white sm:py-5 bg-darkOrange rounded-3xl'>BUY NOW</Link>
+                          <Link href="/checkout"  className='flex-1 py-3 text-lg font-semibold text-center text-white sm:py-5 bg-darkOrange rounded-3xl'>BUY NOW</Link>
                         </div>
                       </div>
                     </div>

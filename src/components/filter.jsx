@@ -155,11 +155,18 @@ export default function Filter() {
                   key={cat.name} 
                   variants={listVariant}
                   whileHover="visible"
-                  className="px-3 hover:text-darkOrange transition-colors duration-200"
+                  className="px-3 transition-colors duration-200 hover:text-darkOrange"
                   >
                     <Link 
-                    href={`/products/${cat.name.toLowerCase()}`} 
-                    >{cat.name} <span className='ml-1'>({cat.amount})</span></Link>
+                    href={`/products/${cat.name.toLowerCase() === "packs & gear" ? "gears " : cat.name.toLowerCase()}`} 
+                    onClick={()=>{
+                      setTimeout(() => {
+                        dispatch(modalActions.toggleFilter())
+                      }, 500);
+                    }}
+                    >{cat.name} 
+                      <span className='ml-1'>({cat.amount})</span>
+                    </Link>
                   </motion.li>
                 ))}
               </ul>

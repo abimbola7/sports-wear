@@ -60,7 +60,6 @@ export default function Card({ imageUrl, name, price, id, amount }) {
               <Image
               loading='lazy' 
               quality={100}
-              priority={true}
               src={imageUrl}
               alt="products"
               width={300}
